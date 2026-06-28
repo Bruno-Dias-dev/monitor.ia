@@ -1,0 +1,40 @@
+        body{
+            background: #e30613;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card{
+            width: 400px;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+            background: white;
+        }
+
+        .logo{
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #e30613;
+        }
+
+        .btn-login{
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px;
+            background: #e30613;
+        }
+
+        .btn-login:hover{
+            background: #c0050f;
+        }
+
+        .form-control{
+            border-radius: 10px;
+            padding: 12px;
+        }
