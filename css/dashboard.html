@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet"  href="dashboard.css">
+</head>
+
+<body>
+<div class="d-flex">
+
+  <!-- Sidebar -->
+  <nav class="sidebar text-dark p-3" style="width: 250px">
+
+    <img class="mb-4" src="/img/Monitor.ia.svg" width="180px">
+
+    <ul class="nav nav-pills flex-column">
+
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark actived" href="#">
+          Métricas omnichannel
+        </a>
+      </li>
+
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark" href="#">
+          Contemplados
+        </a>
+      </li>
+
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark" href="#">
+          Chat
+        </a>
+      </li>
+
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark" href="#">
+          Gravações
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+  <!-- Conteúdo -->
+  <main class="flex-grow-1">
+
+    <div class="container py-4">
+
+      <!-- TODO O SEU CÓDIGO DO DASHBOARD FICA AQUI -->
+
+          <div class="">
+            <h1>Dashboard</h1>
+            <p>Visão geral do sistema</p>
+          </div>
+
+          <div class="container">
+
+        <div class="kpi-grid">
+          <div class="card">
+            <div class="label">Total Mensagens</div>
+            <div class="value">${totalMensagens}</div>
+            <footer class="footer">Gosac</footer>
+          </div>
+          <div class="card">
+            <div class="label">Total Tickets</div>
+            <div class="value">${totalTickets}</div>
+            <footer class="footer">Gosac</footer>
+          </div>
+          <div class="card">
+            <div class="label">Taxa Resolução</div>
+            <div class="value">${taxaResolucao}%</div>
+            <footer class="footer">Gosac</footer>
+          </div>
+          <div class="card">
+            <div class="label">SLA Operacional</div>
+            <div class="value">${sla}%</div>
+            <footer class="footer">Gosac</footer>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Volume de Atendimento - Gosac</div>
+          <canvas id="volumeChart"></canvas>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Métricas Operacionais</div>
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <h3 style="margin-bottom:20px;color:#F05A28;">Gosac</h3>
+              <div class="metric-row">
+                <span>Mensagens Recebidas</span>
+                <strong>${gosac.receivedMessages}</strong>
+              </div>
+              <div class="metric-row">
+                <span>Mensagens Enviadas</span>
+                <strong>${gosac.sendMessages}</strong>
+              </div>
+              <div class="metric-row">
+                <span>Tickets Abertos</span>
+                <strong>${gosac.ticketsOpen}</strong>
+              </div>
+              <div class="metric-row">
+                <span>Tickets Fechados</span>
+                <strong>${gosac.ticketsClose}</strong>
+              </div>
+              <div class="metric-row">
+                <span>Tickets Pendentes</span>
+                <strong>${gosac.ticketsPending}</strong>
+              </div>
+            </div>
+
+            <div class="metric-box">
+              <h3 style="margin-bottom:20px;color:#F05A28;">Chatwoot</h3>
+              <div class="metric-row">
+                <span>Chamados Abertos</span>
+                <strong>${chatwoot.open}</strong>
+              </div>
+              <div class="metric-row">
+                <span>Não Atendidos</span>
+                <strong>${chatwoot.unattended}</strong>
+              </div>
+              <div class="metric-row">
+                <span>Sem Responsável</span>
+                <strong>${chatwoot.unassigned}</strong>
+              </div>
+              <div class="metric-row">
+                <span>Pendentes</span>
+                <strong>${chatwoot.pending}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Indicadores de Performance</div>
+          <div class="progress-box">
+            <div class="progress-title">Taxa de Resolução</div>
+            <div class="progress-bg">
+              <div class="progress-bar" style="width:${taxaResolucao}%"></div>
+            </div>
+            <div class="progress-value">${taxaResolucao}%</div>
+          </div>
+
+          <div class="progress-box">
+            <div class="progress-title">Taxa de Resposta</div>
+            <div class="progress-bg">
+              <div class="progress-bar" style="width:${Math.min(taxaResposta,100)}%"></div>
+            </div>
+            <div class="progress-value">${taxaResposta}%</div>
+          </div>
+
+          <div class="progress-box">
+            <div class="progress-title">Chamados Não Atendidos</div>
+            <div class="progress-bg">
+              <div class="progress-bar" style="width:${taxaNaoAtendidos}%"></div>
+            </div>
+            <div class="progress-value">${taxaNaoAtendidos}%</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Qualidade dos Atendimentos</div>
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <h3 style="margin-bottom:20px;color:#F05A28;">
+                ${media.nome}
+              </h3>
+              <div class="metric-row">
+                <span>Saudação</span>
+                <strong>${media.saudacao}/10</strong>
+              </div>
+              <div class="metric-row">
+                <span>Clareza</span>
+                <strong>${media.clareza}/10</strong>
+              </div>
+              <div class="metric-row">
+                <span>Conhecimento</span>
+                <strong>${media.conhecimento}/10</strong>
+              </div>
+              <div class="metric-row">
+                <span>Resolução</span>
+                <strong>${media.resolucao}/10</strong>
+              </div>
+              <div class="metric-row">
+                <span>Empatia</span>
+                <strong>${media.empatia}/10</strong>
+              </div>
+            </div>
+
+            <div class="metric-box">
+              <div class="progress-box">
+                <div class="progress-title">Saudação</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" style="width:${media.saudacao * 10}%"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Clareza</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" style="width:${media.clareza * 10}%"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Conhecimento</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" style="width:${media.conhecimento * 10}%"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Resolução</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" style="width:${media.resolucao * 10}%"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Empatia</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" style="width:${media.empatia * 10}%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="/script/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

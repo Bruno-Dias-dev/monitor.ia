@@ -1,5 +1,5 @@
         body{
-            background: #e30613;
+            background: #F05A28;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -27,11 +27,11 @@
             width: 100%;
             border-radius: 10px;
             padding: 10px;
-            background: #e30613;
+            background: #F05A28;
         }
 
         .btn-login:hover{
-            background: #c0050f;
+            background: #D94B1A;
         }
 
         .form-control{

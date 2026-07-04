@@ -1,0 +1,169 @@
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Segoe UI, Arial, sans-serif;
+      background: #f8f9fb;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .header {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      border-bottom: 4px solid #F05A28;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #F05A28;
+    }
+
+    .subtitle {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .sidebar {
+      background-color: #fff;
+    }
+
+    .actived {
+      background-color: #F05A28;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      border-top: 4px solid #F05A28;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .label {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .value {
+      font-size: 34px;
+      font-weight: 700;
+      color: #F05A28;
+    }
+
+    .section {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 25px;
+      color: #F05A28;
+      font-weight: 600;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .metric-box {
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .progress-box {
+      margin-bottom: 25px;
+    }
+
+    .progress-title {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .progress-bg {
+      width: 100%;
+      height: 18px;
+      background: #f1f1f1;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #F05A28;
+      border-radius: 20px;
+      transition: 1s;
+    }
+
+    .progress-value {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    canvas {
+      max-height: 400px;
+    }
+
+    @media (max-width: 900px) {
+      .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+    }
+
+    .footer {
+      color: #777;
+      font-size: 11px;
+    }
