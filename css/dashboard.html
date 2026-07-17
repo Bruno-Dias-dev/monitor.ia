@@ -53,39 +53,38 @@
     <div class="container py-4">
 
       <!-- TODO O SEU CÓDIGO DO DASHBOARD FICA AQUI -->
+          <div class="container">
 
           <div class="">
             <h1>Dashboard</h1>
             <p>Visão geral do sistema</p>
           </div>
 
-          <div class="container">
-
         <div class="kpi-grid">
           <div class="card">
-            <div class="label">Total Mensagens</div>
-            <div class="value">${totalMensagens}</div>
-            <footer class="footer">Gosac</footer>
+            <div class="label">Chamados Abertos</div>
+            <div class="value" id="open">-</div>
+            <footer class="footer">Chatwoot</footer>
           </div>
           <div class="card">
-            <div class="label">Total Tickets</div>
-            <div class="value">${totalTickets}</div>
-            <footer class="footer">Gosac</footer>
+            <div class="label">Pendentes</div>
+            <div class="value" id="pending">-</div>
+            <footer class="footer">Chatwoot</footer>
           </div>
           <div class="card">
-            <div class="label">Taxa Resolução</div>
-            <div class="value">${taxaResolucao}%</div>
-            <footer class="footer">Gosac</footer>
+            <div class="label">Não atendidos</div>
+            <div class="value" id="unattended">-</div>
+            <footer class="footer">Chatwoot</footer>
           </div>
           <div class="card">
             <div class="label">SLA Operacional</div>
-            <div class="value">${sla}%</div>
-            <footer class="footer">Gosac</footer>
+            <div class="value" id="sla">-</div>
+            <footer class="footer">Chatwoot</footer>
           </div>
         </div>
 
         <div class="section">
-          <div class="section-title">Volume de Atendimento - Gosac</div>
+          <div class="section-title">Volume de Atendimento - Chatwoot</div>
           <canvas id="volumeChart"></canvas>
         </div>
 
@@ -93,75 +92,24 @@
           <div class="section-title">Métricas Operacionais</div>
           <div class="metrics-grid">
             <div class="metric-box">
-              <h3 style="margin-bottom:20px;color:#F05A28;">Gosac</h3>
-              <div class="metric-row">
-                <span>Mensagens Recebidas</span>
-                <strong>${gosac.receivedMessages}</strong>
-              </div>
-              <div class="metric-row">
-                <span>Mensagens Enviadas</span>
-                <strong>${gosac.sendMessages}</strong>
-              </div>
-              <div class="metric-row">
-                <span>Tickets Abertos</span>
-                <strong>${gosac.ticketsOpen}</strong>
-              </div>
-              <div class="metric-row">
-                <span>Tickets Fechados</span>
-                <strong>${gosac.ticketsClose}</strong>
-              </div>
-              <div class="metric-row">
-                <span>Tickets Pendentes</span>
-                <strong>${gosac.ticketsPending}</strong>
-              </div>
-            </div>
-
-            <div class="metric-box">
               <h3 style="margin-bottom:20px;color:#F05A28;">Chatwoot</h3>
               <div class="metric-row">
                 <span>Chamados Abertos</span>
-                <strong>${chatwoot.open}</strong>
+                <strong id="mP_Open">-</strong>
               </div>
               <div class="metric-row">
                 <span>Não Atendidos</span>
-                <strong>${chatwoot.unattended}</strong>
+                <strong id="mP_Unattended">-</strong>
               </div>
               <div class="metric-row">
                 <span>Sem Responsável</span>
-                <strong>${chatwoot.unassigned}</strong>
+                <strong id="mP_Unassigned">-</strong>
               </div>
               <div class="metric-row">
                 <span>Pendentes</span>
-                <strong>${chatwoot.pending}</strong>
+                <strong id="mP_Pending">-</strong>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="section-title">Indicadores de Performance</div>
-          <div class="progress-box">
-            <div class="progress-title">Taxa de Resolução</div>
-            <div class="progress-bg">
-              <div class="progress-bar" style="width:${taxaResolucao}%"></div>
-            </div>
-            <div class="progress-value">${taxaResolucao}%</div>
-          </div>
-
-          <div class="progress-box">
-            <div class="progress-title">Taxa de Resposta</div>
-            <div class="progress-bg">
-              <div class="progress-bar" style="width:${Math.min(taxaResposta,100)}%"></div>
-            </div>
-            <div class="progress-value">${taxaResposta}%</div>
-          </div>
-
-          <div class="progress-box">
-            <div class="progress-title">Chamados Não Atendidos</div>
-            <div class="progress-bg">
-              <div class="progress-bar" style="width:${taxaNaoAtendidos}%"></div>
-            </div>
-            <div class="progress-value">${taxaNaoAtendidos}%</div>
           </div>
         </div>
 

@@ -1,67 +1,25 @@
-// Dados da API
 async function carregarDashboard() {
+    const response = await fetch("http://127.0.0.1:5000/api/dashboard");
+    const dados = await response.json();
 
-  const response = await fetch("api/dashboard");
+    // Métricas
+    const chatwoot = dados.chatwoot.chatwoot;
+    const totalAtendimentos = chatwoot.open + chatwoot.pending
+    const taxaNaoAtendidos = ((chatwoot.unattended / totalAtendimentos) * 100).toFixed(2);
+    const sla = (100 - taxaNaoAtendidos).toFixed(1);
 
-  const dados = await response.json();
+    // Visão geral
+    document.getElementById("open").innerText = chatwoot.open;
+    document.getElementById("pending").innerText = chatwoot.pending;
+    document.getElementById("unattended").innerText = chatwoot.unattended;
+    document.getElementById("sla").innerText = sla;
 
-  const gosac = dados.gosac;
-  const chatwoot = dados.chatwoot;
+    //Métricas Operacionais
+    document.getElementById("mP_Open").innerText = chatwoot.open;
+    document.getElementById("mP_Unattended").textContent = chatwoot.pending;
+    document.getElementById("mP_Unassigned").textContent = chatwoot.unassigned;
+    document.getElementById("mP_Pending").textContent = chatwoot.unattended;
+
+
 }
-
-
-// Métricas
-const taxaResolucao = ((gosac.ticketsClose / gosac.totalTickets) * 100).toFixed(1);
-const taxaResposta = ((gosac.sendMessages / gosac.receivedMessages) * 100).toFixed(1);
-const taxaNaoAtendidos = ((chatwoot.unattended / chatwoot.open) * 100).toFixed(1);
-
-const totalMensagens = gosac.totalMessages;
-const totalTickets = gosac.totalTickets;
-const sla = (100 - taxaNaoAtendidos).toFixed(1);
-
-const dataAtual = new Date().toLocaleString("pt-BR", {
-  timeZone: "America/Sao_Paulo"
-});
-
- const ctx = document.getElementById('volumeChart');
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: [
-          'Recebidas',
-          'Enviadas',
-          'Tickets Abertos',
-          'Tickets Fechados'
-        ],
-        datasets: [{
-          label: 'Volume',
-          data: [
-            ${gosac.receivedMessages},
-            ${gosac.sendMessages},
-            ${gosac.ticketsOpen},
-            ${gosac.ticketsClose}
-          ],
-          backgroundColor: [
-            '#e30613',
-            '#ff4d57',
-            '#ff7a82',
-            '#ff9da3'
-          ],
-          borderRadius: 8
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+carregarDashboard();

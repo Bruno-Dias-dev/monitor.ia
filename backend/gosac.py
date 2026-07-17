@@ -26,4 +26,3 @@ def buscar_gosac():
     return {
         "gosac": response.json()
     }
-buscar_gosac()
