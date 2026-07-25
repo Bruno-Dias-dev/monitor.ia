@@ -19,7 +19,41 @@ async function carregarDashboard() {
     document.getElementById("mP_Unattended").textContent = chatwoot.pending;
     document.getElementById("mP_Unassigned").textContent = chatwoot.unassigned;
     document.getElementById("mP_Pending").textContent = chatwoot.unattended;
+    
+    document.getElementById("valorNaoAtendidos").textContent =
+        taxaNaoAtendidos + "%";
 
+    document.getElementById("barraNaoAtendidos").style.width =
+        taxaNaoAtendidos + "%";
 
+    criarGrafico(chatwoot);
 }
 carregarDashboard();
+
+function criarGrafico(chatwoot) {
+
+    const ctx = document.getElementById("volumeChart");
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: [
+                "Abertos",
+                "Pendentes",
+                "Não Atendidos",
+                "Sem Responsável"
+            ],
+            datasets: [{
+                label: "Chatwoot",
+                data: [
+                    chatwoot.open,
+                    chatwoot.pending,
+                    chatwoot.unattended,
+                    chatwoot.unassigned
+                ],
+                borderRadius: 8
+            }]
+        }
+    });
+
+}
