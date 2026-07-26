@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import mysql.connector
 from flask_cors import CORS
+from flask_jwt_extended import create_acess_token
 
 app = Flask(__name__)
 CORS(app)
@@ -37,10 +38,19 @@ def login():
     
         user = cursor.fetchone()
 
+
         if user:
+            token = create_acess_token(identity=user[0])
+
+
             return jsonify({
                 "ok": True,
-                "usuario": user
+                "token": token,
+                "usuario": {
+                "id": user[0],
+                "nome": user[1],
+                "email": user[2]
+                }
             })
         else:
             return jsonify({
@@ -61,3 +71,4 @@ def login():
 
 if __name__ == "__main__":
     app.run(debug=True)
+

@@ -22,9 +22,12 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         console.log(data);
 
         if (data.ok) {
+
+            localStorage.setItem("token", dados.token);
+
             document.getElementById("status").innerText = `Entrando...`;
 
-            window.location.href = "https://n8n.lum3.com.br/webhook/monitoria"
+            window.location.href = "dashboard.html"
         } else {
             document.getElementById("mensagemErro").innerHTML = 
             `<div class="alert alert-danger mt-3" role="alert">
