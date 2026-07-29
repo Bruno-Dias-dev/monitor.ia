@@ -1,6 +1,11 @@
+import os
+
+from dotenv import load_dotenv
 from google import genai
 
-client = genai.Client(api_key="AQ.Ab8RN6KHY2YjTH7kyoIqeNJQ7E5QxoileR3gfFuSzNYLFh7nAg")
+load_dotenv()
+
+client = genai.Client(api_key=os.environ["GOOGLE_GENAI_API_KEY"])
 
 
 system_prompt = """

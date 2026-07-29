@@ -1,16 +1,21 @@
-import requests 
+import os
+
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def buscar_gosac():
 
-    url = "https://grupocontem.gosac.com.br/api/dashboard/general"
+    url = os.environ["GOSAC_API_URL"]
 
     params = {
-        "startPeriod": "2026-06-11",
-        "endPeriod": "2026-06-12"
+        "startPeriod": os.environ["GOSAC_START_PERIOD"],
+        "endPeriod": os.environ["GOSAC_END_PERIOD"]
     }
 
     headers = {
-        "Authorization": "INTEGRATION 2f632a5dfc3153add88cd01d7ceefc00545db1e9abc8238840182beb4a23"
+        "Authorization": os.environ["GOSAC_API_TOKEN"]
     }
 
     response = requests.get(

@@ -1,4 +1,4 @@
-console.log("JS carregou");
+﻿console.log("JS carregou");
 
 document.getElementById("loginForm").addEventListener("submit", async function(e){
     e.preventDefault();
@@ -22,12 +22,9 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         console.log(data);
 
         if (data.ok) {
-
-            localStorage.setItem("token", dados.token);
-
+            localStorage.setItem("token", data.token);
             document.getElementById("status").innerText = `Entrando...`;
-
-            window.location.href = "dashboard.html"
+            window.location.href = "dashboard.html";
         } else {
             document.getElementById("mensagemErro").innerHTML = 
             `<div class="alert alert-danger mt-3" role="alert">
@@ -41,6 +38,9 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
     } catch (error) {
         console.error(error);
-        console.log(error)
+        document.getElementById("mensagemErro").innerHTML = 
+            `<div class="alert alert-danger mt-3" role="alert">
+                Erro na conexão com o servidor. Tente novamente mais tarde.
+            </div>`;
     }
 });

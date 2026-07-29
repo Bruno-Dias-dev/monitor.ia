@@ -1,11 +1,16 @@
+import os
+
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def buscar_chatwoot():
 
-    url = "https://chatwoot.grupocontem.com.br/api/v2/accounts/1/reports/conversations"
+    url = os.environ["CHATWOOT_API_URL"]
 
     headers = {
-        "api_access_token": "BuLinx9FJnnwMJ4s5qBzcG7V"
+        "api_access_token": os.environ["CHATWOOT_API_TOKEN"]
     }
 
     params = {
