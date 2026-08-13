@@ -1,5 +1,5 @@
 ﻿import os
-from datetime import timedelta
+from datetime import datetime, time, timedelta
 
 import mysql.connector
 from dotenv import load_dotenv
@@ -31,7 +31,7 @@ def conectar_db():
         port=int(os.environ["DB_PORT"]),
         user=os.environ["DB_USER"],
         password=os.environ["DB_PASSWORD"],
-        database=os.environ["DB_NAME"],
+        database=os.getenv("DB_NAME", "grupocontem"),
         auth_plugin="mysql_native_password"
     )
 
@@ -100,6 +100,53 @@ def dashboard():
 @jwt_required()
 def me():
     return jsonify({"ok": True, "id": get_jwt_identity()})
+
+
+@app.route("/api/avaliacoes", methods=["GET"])
+@jwt_required()
+def consultar_avaliacoes():
+    data_inicial = request.args.get("data_inicial", "").strip()
+    data_final = request.args.get("data_final", "").strip()
+
+    if not data_inicial or not data_final:
+        return jsonify({"ok": False, "error": "Data inicial e data final são obrigatórias"}), 400
+
+    try:
+        inicio = datetime.strptime(data_inicial, "%Y-%m-%d").date()
+        fim = datetime.strptime(data_final, "%Y-%m-%d").date()
+    except ValueError:
+        return jsonify({"ok": False, "error": "As datas devem estar no formato AAAA-MM-DD"}), 400
+
+    if inicio > fim:
+        return jsonify({"ok": False, "error": "A data inicial não pode ser maior que a data final"}), 400
+
+    campos = """
+        id, identificador_unico, data, conversacao, canal, contemplado,
+        beneficiario, numero, saudacao, clareza, conhecimento, resolucao,
+        empatia, score_qualidade, risco_processo, resolvido, reincidencia,
+        observacoes, acao_gerencial, criado_em
+    """
+
+    try:
+        db = conectar_db()
+        cursor = db.cursor(dictionary=True)
+        cursor.execute(
+            f"""
+            SELECT {campos}
+            FROM avaliacao_atendimentos
+            WHERE data >= %s AND data <= %s
+            ORDER BY data DESC, id DESC
+            """,
+            (datetime.combine(inicio, time.min), datetime.combine(fim, time.max))
+        )
+        return jsonify({"ok": True, "registros": cursor.fetchall()})
+    except mysql.connector.Error:
+        return jsonify({"ok": False, "error": "Erro ao consultar as avaliações"}), 500
+    finally:
+        if "cursor" in locals():
+            cursor.close()
+        if "db" in locals():
+            db.close()
 
 
 @jwt.unauthorized_loader

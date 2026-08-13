@@ -6,7 +6,7 @@
 
   <title>Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet"  href="/monitor.ia/css/chat.css">
+  <link rel="stylesheet"  href="../css/chat.css">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
   <!-- Sidebar -->
   <nav class="sidebar text-dark p-3" style="width: 250px">
 
-    <img class="mb-4" src="/monitor.ia/assets/img/Monitor.ia.svg" width="180px">
+    <img class="mb-4" src="../assets/img/Monitor.ia.svg" width="180px">
 
     <ul class="nav nav-pills flex-column">
 
@@ -32,7 +32,7 @@
       </li>
 
       <li class="nav-item mb-2">
-        <a class="nav-link text-dark  actived" href="chat.html">
+        <a class="nav-link text-dark actived" href="chat.html">
           Chat
         </a>
       </li>
@@ -50,10 +50,11 @@
   <!-- Conteúdo -->
 <main class="d-flex flex-column justify-content-end align-items-center vh-100 flex-grow-1">
 
-  <div class="input-group w-75 mb-3">
+  <div class="chat-composer mb-4">
 
-      <label for="arquivo" class="btn btn-light border">
-          +
+      <label for="arquivo" class="file-picker">
+          <span class="file-picker-icon" aria-hidden="true">+</span>
+          <span class="file-picker-text"><strong>Anexar arquivo</strong><small id="arquivoNome">PDF, DOC, DOCX ou áudio</small></span>
       </label>
 
       <input
@@ -61,12 +62,7 @@
           type="file"
           hidden
           accept=".pdf,.doc,.docx,audio/*">
-
-      <input
-          type="text"
-          class="form-control"
-          placeholder="Faça sua análise agora">
-      <button id="enviar" class="btn btn-light border">
+      <button id="enviar" class="send-button" type="button" aria-label="Enviar arquivo">
         ➤
       </button>
 

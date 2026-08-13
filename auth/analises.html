@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análises de atendimentos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/analises.css">
+</head>
+<body>
+  <div class="d-flex">
+    <nav class="sidebar text-dark p-3" style="width: 250px">
+      <img class="mb-4" src="../assets/img/Monitor.ia.svg" width="180" alt="Monitor.ia">
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item mb-2"><a class="nav-link text-dark" href="dashboard.html">Métricas omnichannel</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-dark" href="contemplados.html">Contemplados</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-dark" href="chat.html">Chat</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-dark actived" href="analises.html">Análises</a></li>
+      </ul>
+    </nav>
+
+    <main class="flex-grow-1">
+      <div class="container py-4">
+        <header class="header">
+          <div>
+            <h1 class="title">Avaliações de atendimentos</h1>
+            <p class="subtitle mb-0">Consulte e analise a qualidade dos atendimentos por período.</p>
+          </div>
+        </header>
+
+        <section class="section search-section">
+          <form id="filtroAvaliacoes" class="filter-form">
+            <div><label for="dataInicial">Data inicial</label><input id="dataInicial" name="data_inicial" type="date" required></div>
+            <div><label for="dataFinal">Data final</label><input id="dataFinal" name="data_final" type="date" required></div>
+            <button type="submit" id="botaoPesquisar" class="btn btn-primary">Pesquisar</button>
+          </form>
+          <p id="mensagem" class="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="section results-section">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle" id="tabelaAvaliacoes">
+              <thead><tr><th>Data</th><th>Identificador</th><th>Canal</th><th>Beneficiário</th><th>Score</th><th>Risco</th><th>Resolvido</th><th></th></tr></thead>
+              <tbody><tr><td colspan="8" class="empty-state">Informe o período para consultar as avaliações.</td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal fade" id="detalheModal" tabindex="-1" aria-labelledby="detalheTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable"><div class="modal-content">
+      <div class="modal-header"><h2 class="modal-title fs-5" id="detalheTitulo">Detalhes do atendimento</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+      <div class="modal-body" id="detalheConteudo"></div>
+    </div></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../script/analises.js"></script>
+</body>
+</html>

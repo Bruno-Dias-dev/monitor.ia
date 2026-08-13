@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -20,13 +21,13 @@
     <ul class="nav nav-pills flex-column">
 
       <li class="nav-item mb-2">
-        <a class="nav-link text-dark actived" href="dashboard.html">
+        <a class="nav-link text-dark" href="dashboard.html">
           Métricas omnichannel
         </a>
       </li>
 
       <li class="nav-item mb-2">
-        <a class="nav-link text-dark" href="#">
+        <a class="nav-link text-dark actived" href="#">
           Contemplados
         </a>
       </li>
@@ -56,62 +57,9 @@
           <div class="container">
 
           <div class="">
-            <h1>Dashboard</h1>
-            <p>Visão geral do sistema</p>
+            <h1>Métricas</h1>
+            <p>Visão geral dos contemplados</p>
           </div>
-
-        <div class="kpi-grid">
-          <div class="card">
-            <div class="label">Chamados Abertos</div>
-            <div class="value" id="open">-</div>
-            <footer class="footer">Chatwoot</footer>
-          </div>
-          <div class="card">
-            <div class="label">Pendentes</div>
-            <div class="value" id="pending">-</div>
-            <footer class="footer">Chatwoot</footer>
-          </div>
-          <div class="card">
-            <div class="label">Não atendidos</div>
-            <div class="value" id="unattended">-</div>
-            <footer class="footer">Chatwoot</footer>
-          </div>
-          <div class="card">
-            <div class="label">SLA Operacional</div>
-            <div class="value" id="sla">-</div>
-            <footer class="footer">Chatwoot</footer>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="section-title">Volume de Atendimento - Chatwoot</div>
-          <canvas id="volumeChart"></canvas>
-        </div>
-
-        <div class="section">
-          <div class="section-title">Métricas Operacionais</div>
-          <div class="metrics-grid">
-            <div class="metric-box">
-              <h3 style="margin-bottom:20px;color:#F05A28;">Chatwoot</h3>
-              <div class="metric-row">
-                <span>Chamados Abertos</span>
-                <strong id="mP_Open">-</strong>
-              </div>
-              <div class="metric-row">
-                <span>Não Atendidos</span>
-                <strong id="mP_Unattended">-</strong>
-              </div>
-              <div class="metric-row">
-                <span>Sem Responsável</span>
-                <strong id="mP_Unassigned">-</strong>
-              </div>
-              <div class="metric-row">
-                <span>Pendentes</span>
-                <strong id="mP_Pending">-</strong>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="section">
           <div class="section-title">Qualidade dos Atendimentos</div>
