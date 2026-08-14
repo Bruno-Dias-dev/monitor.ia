@@ -5,6 +5,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+
+
+
+
 def buscar_gosac():
 
     url = os.environ["GOSAC_API_URL"]

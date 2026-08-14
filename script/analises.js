@@ -53,3 +53,5 @@ function mostrarDetalhes(item) {
   document.getElementById("detalheConteudo").innerHTML = `<div class="detail-grid">${detalhes}</div><h3 class="h6 mt-4">Conversa</h3><pre class="conversation">${escapeHtml(jsonFormatado)}</pre>`;
   modal.show();
 }
+
+
