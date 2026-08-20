@@ -51,21 +51,21 @@
 <main class="d-flex flex-column justify-content-end align-items-center vh-100 flex-grow-1">
 
   <div class="chat-composer mb-4">
-
+    <form id="iaForm">
       <label for="arquivo" class="file-picker">
           <span class="file-picker-icon" aria-hidden="true">+</span>
-          <span class="file-picker-text"><strong>Anexar arquivo</strong><small id="arquivoNome">PDF, DOC, DOCX ou áudio</small></span>
+          <span class="file-picker-text"><strong>Anexar arquivo</strong><small id="arquivoNome">Áudio</small></span>
       </label>
 
       <input
           id="arquivo"
           type="file"
           hidden
-          accept=".pdf,.doc,.docx,audio/*">
-      <button id="enviar" class="send-button" type="button" aria-label="Enviar arquivo">
+          accept="audio/*">
+      <button id="enviar" class="send-button" type="submit" aria-label="Enviar arquivo">
         ➤
       </button>
-
+    </form>
     </div>
 
 </main>

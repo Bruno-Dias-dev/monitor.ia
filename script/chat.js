@@ -1,24 +1,49 @@
+const form = document.getElementById("iaForm");
 const arquivo = document.getElementById("arquivo");
 const arquivoNome = document.getElementById("arquivoNome");
 
 arquivo.addEventListener("change", () => {
-  arquivoNome.textContent = arquivo.files[0]
-    ? arquivo.files[0].name
-    : "PDF, DOC, DOCX ou áudio";
+  if (arquivo.files.length > 0) {
+    arquivoNome.textContent = arquivo.files[0].name;
+  } else {
+    arquivoNome.textContent = "Áudio";
+  }
+});
 
-    formatarData.addEventListener("submit", async (e) => {
-      e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      const formData = new FormData;
-      formData.append("Nome do arquivo", arquivoNome);
-      formData.append("arquivo", arquivo)
+  console.log("FORMA NÃO DEVERIA CARREGAR")
 
-      const response = await fetch("http://127.0.0.1:5000/ia/audio", {
-        method: "POST",
-        body: formData      
-      });
+  if (!arquivo.files || arquivo.files.length === 0) {
+    window.alert("Selecione o arquivo primeiro, por favor.");
+    return;
+  }
 
-      const result = await response.text();
-      
+  const audio = arquivo.files[0];
 
-    })
+  console.log("Arquivo:", audio);
+  console.log("Nome:", audio.name);
+  console.log("Tipo:", audio.type);
+  console.log("Tamanho:", audio.size);
+
+  // Cria o FormData
+  const formData = new FormData();
+
+  // Adiciona o arquivo
+  formData.append("audio", audio);
+
+  try {
+    const response = await fetch("http://127.0.0.1:5000/ia/audio", {
+      method: "POST",
+      body: formData
+    });
+
+    const result = await response.text();
+
+    console.log(`Resultado da requisição: ${result}`);
+
+  } catch (error) {
+    console.error("Erro na requisição:", error);
+  }
+});
