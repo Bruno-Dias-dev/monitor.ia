@@ -13,6 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
+
 app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
     hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_HOURS", "4"))
@@ -172,6 +173,7 @@ FORMATO:
 
 @app.route("/ia/audio", methods=["POST"])
 def captura_audio():
+    print("1 - Requisçãoi recebida")
 
     # Verifica se o arquivo foi enviado
     if "audio" not in request.files:
@@ -180,22 +182,23 @@ def captura_audio():
         }), 400
 
     audio_file = request.files["audio"]
+    print(f"3 - Arquivo recebido: {audio_file.filename}")
 
     if audio_file.filename == "":
         return jsonify({
             "error": "Arquivo de áudio não informado"
         }), 400
 
+    temp_path = None
     try:
-
         # Salva temporariamente o áudio
         temp_path = os.path.join(
             "temp",
             audio_file.filename
         )
 
+        print("4 - Salvando arquivo...")
         os.makedirs("temp", exist_ok=True)
-
         audio_file.save(temp_path)
 
         # Envia o áudio para o Gemini
@@ -203,6 +206,7 @@ def captura_audio():
             file=temp_path
         )
 
+        print("5 - Arquivo salvo:", temp_path)
         # Analisa o áudio
         response = client.models.generate_content(
             model="gemini-2.5-flash",
@@ -212,24 +216,34 @@ def captura_audio():
             ]
         )
 
-        # Remove o arquivo temporário
-        os.remove(temp_path)
+        print("7 - Arquivo enviado para Gemini")
+        print("10 - Retornando resposta para navegador")
 
         # Retorna o resultado
         return jsonify({
             "resultado": response.text
-        })
+        }), 200
 
     except Exception as e:
+        print("ERRO:", repr(e))
+
+        if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+            return jsonify({
+                "erro": "Limite do uso da IA excedido."
+            }), 429
 
         return jsonify({
-            "error": str(e)
+            "error": "Erro ao processar o áudio."
         }), 500
 
+    finally:
+        # Remove o arquivo temporario, mesmo quando ocorrer erro.
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
 
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
-        port=5000,
+        port=5001,
         debug=True
     )

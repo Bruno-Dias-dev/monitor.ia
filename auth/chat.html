@@ -50,6 +50,16 @@
   <!-- Conteúdo -->
 <main class="d-flex flex-column justify-content-end align-items-center vh-100 flex-grow-1">
 
+  <!-- Área do chat-->
+  <div id="chatMessages" class="chat-messages flez-grow-1">
+
+
+    <div id="alert" class="alert alert-danger d-none" role="alert">
+      Erro no envio!
+    </div>
+
+  </div>
+
   <div class="chat-composer mb-4">
     <form id="iaForm">
       <label for="arquivo" class="file-picker">
@@ -66,13 +76,12 @@
         ➤
       </button>
     </form>
-    </div>
+  </div>
 
 </main>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script src="/script/chat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../script/chat.js"></script>
 </body>
 </html>

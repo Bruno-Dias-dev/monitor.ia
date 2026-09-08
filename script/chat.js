@@ -1,49 +1,71 @@
 const form = document.getElementById("iaForm");
 const arquivo = document.getElementById("arquivo");
 const arquivoNome = document.getElementById("arquivoNome");
+const alertBox = document.getElementById("alert");
+const enviar = document.getElementById("enviar");
+const FETCH_TIMEOUT_MS = 120000;
 
 arquivo.addEventListener("change", () => {
-  if (arquivo.files.length > 0) {
-    arquivoNome.textContent = arquivo.files[0].name;
-  } else {
-    arquivoNome.textContent = "Áudio";
-  }
+    if (arquivo.files.length > 0) {
+        arquivoNome.textContent = arquivo.files[0].name;
+    } else {
+        arquivoNome.textContent = "Áudio";
+    }
 });
 
 form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    console.log("Processo iniciado");
+    if (!arquivo.files || arquivo.files.length === 0) {
+        alert("Selecione o arquivo primeiro.");
+        return;
+    }
+    const audio = arquivo.files[0];
+    const formData = new FormData();
 
-  console.log("FORMA NÃO DEVERIA CARREGAR")
+    formData.append("audio", audio);
 
-  if (!arquivo.files || arquivo.files.length === 0) {
-    window.alert("Selecione o arquivo primeiro, por favor.");
-    return;
-  }
+    console.log("ANTES DO FETCH");
+    enviar.disabled = true;
+    enviar.setAttribute("aria-busy", "true");
+    alertBox.classList.add("d-none");
 
-  const audio = arquivo.files[0];
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+        let response;
 
-  console.log("Arquivo:", audio);
-  console.log("Nome:", audio.name);
-  console.log("Tipo:", audio.type);
-  console.log("Tamanho:", audio.size);
+        try {
+            response = await fetch("http://127.0.0.1:5001/ia/audio", {
+                method: "POST",
+                body: formData,
+                signal: controller.signal
+            });
+        } finally {
+            clearTimeout(timeoutId);
+        }
 
-  // Cria o FormData
-  const formData = new FormData();
+        console.log("DEPOIS DO FETCH");
+        const result = await response.text();
 
-  // Adiciona o arquivo
-  formData.append("audio", audio);
+        console.log("Resultado:", result);
 
-  try {
-    const response = await fetch("http://127.0.0.1:5000/ia/audio", {
-      method: "POST",
-      body: formData
-    });
+        if (!response.ok) {
+            alertBox.textContent = `Erro no envio! Status: ${response.status}`;
+            alertBox.classList.remove("d-none");
+            return;
+        }
 
-    const result = await response.text();
+    } catch (error) {
+        console.error("Erro:", error);
 
-    console.log(`Resultado da requisição: ${result}`);
+        alertBox.textContent = error.name === "AbortError"
+            ? "A análise demorou mais que 2 minutos. Tente novamente."
+            : "Não foi possível conectar com o servidor.";
 
-  } catch (error) {
-    console.error("Erro na requisição:", error);
-  }
+        alertBox.classList.remove("d-none");
+    } finally {
+        enviar.disabled = false;
+        enviar.removeAttribute("aria-busy");
+    }
 });
