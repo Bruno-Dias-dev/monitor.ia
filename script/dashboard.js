@@ -1,28 +1,79 @@
 ﻿async function carregarDashboard() {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    /* const token = localStorage.getItem("token"); */
+    /* if (!token) {
         window.location.href = "login.html";
         return;
-    }
+    } */
 
     const response = await fetch("http://127.0.0.1:5000/api/dashboard", {
-        headers: {
+        /* headers: {
             "Authorization": `Bearer ${token}`
-        }
+        } */
     });
 
-    if (response.status === 401) {
+    console.log(response)
+
+    /* if (response.status === 401) {
         localStorage.removeItem("token");
         window.location.href = "login.html";
         return;
-    }
+    } */
 
     const dados = await response.json();
 
+    console.log(dados)
+
     const chatwoot = dados.chatwoot.chatwoot;
-    const totalAtendimentos = chatwoot.open + chatwoot.pending;
-    const taxaNaoAtendidos = ((chatwoot.unattended / totalAtendimentos) * 100).toFixed(2);
+    const atendidas = chatwoot.open;
+    const naoAtendidas = chatwoot.unattended;
+    const totalAtendimentos = atendidas - naoAtendidas;
+    const percentual = ((atendidas/totalAtendimentos) * 100).toFixed(1);
+    const taxaNaoAtendidos = ((naoAtendidas / totalAtendimentos) * 100).toFixed(2);
     const sla = (100 - taxaNaoAtendidos).toFixed(1);
+
+    new Chart(document.getElementById("graficoAtendimento"), {
+        type: "doughnut",
+
+        data: {
+            labels: [
+                "Atendidas",
+                "Não atendidas"
+            ],
+
+            datasets: [{
+                data: [
+                    atendidas,
+                    naoAtendidas
+                ]
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    position: "bottom"
+                },
+
+                title: {
+                    display: true,
+                    text: "Índice de Atendimento"
+                },
+
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const valor = context.raw;
+                            const porcentagem = ((valor / totalAtendimentos) * 100).toFixed(1);
+
+                            return `${context.label}: ${valor} (${porcentagem}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
 
     document.getElementById("open").innerText = chatwoot.open;
     document.getElementById("pending").innerText = chatwoot.pending;
