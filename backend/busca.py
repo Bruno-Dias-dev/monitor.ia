@@ -1,10 +1,8 @@
 from flask import request, jsonify
 import mysql.connector
-from flask_jwt_extended import jwt_required
-
+import os
 
 @app.route("/api/avaliacoes", methods=["GET"])
-@jwt_required()
 def buscar_avaliacoes():
 
     data_inicial = request.args.get("data_inicial")
@@ -12,15 +10,17 @@ def buscar_avaliacoes():
 
     if not data_inicial or not data_final:
         return jsonify({
-            "error": "Informe a data inicial e a data final."
+            "sucesso": False,
+            "error": "VALIDACAO",
+            "mensagem": "Informe a data inicial e a data final."
         }), 400
 
     try:
         conexao = mysql.connector.connect(
-            host=os.environ["DB_HOST"],
-            user=os.environ["DB_USER"],
-            password=os.environ["DB_PASSWORD"],
-            database=os.environ["DB_NAME"]
+            host=os.environ["DB_HOST2"],
+            user=os.environ["DB_USER2"],
+            password=os.environ["DB_PASSWORD2"],
+            database=os.environ["DB_NAME2"]
         )
 
         cursor = conexao.cursor(dictionary=True)
@@ -61,6 +61,7 @@ def buscar_avaliacoes():
         conexao.close()
 
         return jsonify({
+            "sucesso": True,
             "registros": registros
         }), 200
 
@@ -68,5 +69,6 @@ def buscar_avaliacoes():
         print(f"Erro ao consultar avaliações: {erro}")
 
         return jsonify({
-            "error": "Erro ao consultar avaliações no banco."
+            "error": "Erro ao consultar avaliações no banco.",
+            "mensagem": str(erro)
         }), 500
