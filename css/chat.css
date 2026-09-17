@@ -125,14 +125,18 @@
 
     .chat-composer {
       width: min(720px, calc(100% - 32px));
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
+      padding: 8px;
       background: #fff;
       border: 1px solid #e7e9ee;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(27, 31, 35, .08);
+    }
+
+    .chat-composer form {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
     }
 
     .file-picker {
@@ -149,19 +153,80 @@
       transition: background .2s, border-color .2s, transform .2s;
     }
 
-    .file-picker:hover { background: #fff1eb; border-color: #F05A28; transform: translateY(-1px); }
-    .file-picker-icon { flex: 0 0 36px; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: #F05A28; color: #fff; font-size: 26px; font-weight: 300; line-height: 1; }
-    .file-picker-text { min-width: 0; display: grid; gap: 2px; }
-    .file-picker-text strong { color: #3c2420; font-size: 14px; }
-    .file-picker-text small { overflow: hidden; color: #7b7170; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .file-picker:hover { 
+      background:
+     #fff1eb;
+     border-color:
+     #F05A28;
+     transform: translateY(-1px); 
+    }
 
-    .send-button { display: grid; place-items: center; width: 48px; height: 48px; border: 0; border-radius: 12px; background: #F05A28; color: #fff; font-size: 26px; transition: background .2s, transform .2s; }
-    .send-button:hover { background: #d94718; transform: translateY(-1px); }
-    .send-button:focus-visible, .file-picker:focus-visible { outline: 3px solid rgba(240, 90, 40, .3); outline-offset: 2px; }
+    .file-picker-icon {
+      flex: 0 0 36px;
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #F05A28;
+      color: #fff;
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .file-picker-text {
+      min-width: 0;
+      display: grid;
+      gap: 2px;
+    }
+
+    .file-picker-text strong {
+      color: #3c2420;
+      font-size: 14px;
+    }
+
+    .file-picker-text small {
+      overflow: hidden;
+      color: #7b7170;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .send-button {
+      flex: 0 0 48px;
+      display: grid;
+      place-items: center;
+      width: 48px; height: 48px;
+      border: 0; border-radius: 12px;
+      background: #F05A28; color:
+      #fff; font-size: 26px;
+      transition: background .2s, transform .2s;
+    }
+
+    .send-button:hover {
+      background: #d94718;
+      transform: translateY(-1px);
+    }
+    .send-button:focus-visible, .file-picker:focus-visible {
+      outline: 3px solid rgba(240, 90, 40, .3);
+      outline-offset: 2px;
+    }
 
     @media (max-width: 480px) {
-      .chat-composer { gap: 8px; padding: 8px; }
-      .file-picker { padding: 8px; }
-      .file-picker-text small { display: none; }
-      .send-button { width: 44px; height: 44px; }
+      .chat-composer form { 
+        gap: 8px;
+      }
+      .file-picker { 
+        padding: 8px; 
+      }
+      .file-picker-text small { 
+        display: none; 
+      }
+      .send-button { 
+        flex-basis: 44px;
+        width: 44px; 
+        height: 44px; 
+      }
     }
