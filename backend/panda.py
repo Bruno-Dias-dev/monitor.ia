@@ -38,12 +38,15 @@ def capturaExcel():
 
 app = Flask(__name__)
 
-@app.route("avaliacoes/media", methods=["GET"])
+@app.route("/avaliacoes/media", methods=["GET"])
 def avaliacoes_media():
     dados = capturaExcel()
 
     return jsonify(dados)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5003,
+        debug=True)
 
