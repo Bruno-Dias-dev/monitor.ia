@@ -5,7 +5,7 @@ from io import BytesIO
 from dotenv import load_dotenv
 from flask import Flask, jsonify
 
-# Rodando variáveis de api
+# Rodando variáveis de ambiente
 load_dotenv()
 url = os.getenv("EXCEL_URL")
 
@@ -39,7 +39,7 @@ def capturaExcel():
 app = Flask(__name__)
 
 @app.route("avaliacoes/media", methods=["GET"])
-
+def avaliacoes_media():
     dados = capturaExcel()
 
     return jsonify(dados)
