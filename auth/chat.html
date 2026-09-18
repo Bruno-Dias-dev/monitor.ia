@@ -53,11 +53,16 @@
   <!-- Área do chat-->
   <div id="chatMessages" class="chat-messages flex-grow-1">
 
-
-    <div id="alert" class="alert alert-danger d-none" role="alert">
+    <div id="alert" class="alert alert-danger d-none my-3" role="alert">
       Erro no envio!
     </div>
 
+  </div>
+
+  <div id="caixaResposta" class="rounded d-none">
+    <p id="textoResposta">
+      oi, tudo bem?
+    </p>
   </div>
 
   <div class="chat-composer mb-4">
@@ -78,7 +83,7 @@
         hidden
         accept="audio/*">
 
-      <button id="enviar" class="send-button" type="submit" aria-label="Enviar arquivo">
+      <button id="enviar" class="send-button" type="button" aria-label="Enviar arquivo">
         ➤
       </button>
 

@@ -132,7 +132,7 @@
       box-shadow: 0 8px 24px rgba(27, 31, 35, .08);
     }
 
-    .chat-composer form {
+    #iaForm {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -214,8 +214,12 @@
       outline-offset: 2px;
     }
 
+    .resposta {
+      background-color: #ff0000;
+    }
+
     @media (max-width: 480px) {
-      .chat-composer form { 
+      #iaForm {
         gap: 8px;
       }
       .file-picker { 

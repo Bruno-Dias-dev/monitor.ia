@@ -227,13 +227,17 @@ def captura_audio():
     except Exception as e:
         print("ERRO:", repr(e))
 
+        erro = str(e)
+
         if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
             return jsonify({
-                "erro": "Limite do uso da IA excedido."
+                "erro": "Limite do uso da IA excedido.",
+                "detalhamento": erro
             }), 429
 
         return jsonify({
-            "error": "Erro ao processar o áudio."
+            "error": "Erro ao processar o áudio.",
+            "detalhamento": erro
         }), 500
 
     finally:

@@ -6,49 +6,37 @@ const enviar = document.getElementById("enviar");
 const FETCH_TIMEOUT_MS = 120000;
 
 arquivo.addEventListener("change", () => {
-    if (arquivo.files.length > 0) {
-        arquivoNome.textContent = arquivo.files[0].name;
-    } else {
-        arquivoNome.textContent = "Áudio";
-    }
+    arquivoNome.textContent = arquivo.files.length > 0
+        ? arquivo.files[0].name
+        : "Áudio";
 });
 
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    console.log("Processo iniciado");
+enviar.addEventListener("click", async () => {
+
     if (!arquivo.files || arquivo.files.length === 0) {
         alert("Selecione o arquivo primeiro.");
         return;
     }
-    const audio = arquivo.files[0];
+
     const formData = new FormData();
-
-    formData.append("audio", audio);
-
-    console.log("ANTES DO FETCH");
-    enviar.disabled = true;
-    enviar.setAttribute("aria-busy", "true");
-    alertBox.classList.add("d-none");
+    formData.append("audio", arquivo.files[0]);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-        let response;
+        // Dispara a requisição antes de atualizar a interface de carregamento.
+        const request = fetch("http://127.0.0.1:5001/ia/audio", {
+            method: "POST",
+            body: formData,
+            signal: controller.signal
+        });
 
-        try {
-            response = await fetch("http://127.0.0.1:5001/ia/audio", {
-                method: "POST",
-                body: formData,
-                signal: controller.signal
-            });
-        } finally {
-            clearTimeout(timeoutId);
-        }
+        enviar.disabled = true;
+        enviar.setAttribute("aria-busy", "true");
+        enviar.textContent = "...";
+        alertBox.classList.add("d-none");
 
-        console.log("DEPOIS DO FETCH");
-        const result = await response.text();
-
-        console.log("Resultado:", result);
+        const response = await request;
 
         if (!response.ok) {
             alertBox.textContent = `Erro no envio! Status: ${response.status}`;
@@ -56,16 +44,22 @@ form.addEventListener("submit", async (e) => {
             return;
         }
 
+        const data = await response.json();
+        const resposta = document.getElementById("textoResposta");
+        const caixaResposta = document.getElementById("caixaResposta");
+
+        resposta.textContent = data.resultado;
+        caixaResposta.classList.remove("d-none");
     } catch (error) {
         console.error("Erro:", error);
-
         alertBox.textContent = error.name === "AbortError"
             ? "A análise demorou mais que 2 minutos. Tente novamente."
             : "Não foi possível conectar com o servidor.";
-
         alertBox.classList.remove("d-none");
     } finally {
+        clearTimeout(timeoutId);
         enviar.disabled = false;
         enviar.removeAttribute("aria-busy");
+        enviar.textContent = "➤";
     }
 });

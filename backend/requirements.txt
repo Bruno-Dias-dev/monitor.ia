@@ -3,3 +3,6 @@ Flask-CORS
 Flask-JWT-Extended
 mysql-connector-python
 python-dotenv
+requests
+google-genai
+pandas
