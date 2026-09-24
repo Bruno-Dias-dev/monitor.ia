@@ -4,6 +4,7 @@ import pandas as pd
 from io import BytesIO
 from dotenv import load_dotenv
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 # Rodando variáveis de ambiente
 load_dotenv()
@@ -36,6 +37,7 @@ def capturaExcel():
     return dados
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/avaliacoes/media", methods=["GET"])
 def avaliacoes_media():
