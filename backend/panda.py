@@ -13,28 +13,27 @@ url = os.getenv("EXCEL_URL")
 def capturaExcel():
     response = requests.get(url)
     response.raise_for_status()
-    df = pd.read_excel(BytesIO(response.content))
+    df = pd.read_excel(BytesIO(response.content), sheet_name="media")
 
 #   pd.set_option("display.max_columns", None)
 
     df_avaliacoes = pd.read_excel(BytesIO(response.content), sheet_name="media")
 
-    # Barbara Aparecyda
-    barbara = df_avaliacoes[df_avaliacoes["Contemplado"] == "Barbara Aparecyda"]
-    nomeBarbara = barbara["Contemplado"].iloc[0]
-    mediaSaudacao = barbara["Média Saudação"].iloc[0]
-    mediaConhecimento = barbara["Média Clareza"].iloc[0]
-    mediaResolucao = barbara["Média Conhecimento"].iloc[0]
-    mediaEmpatia = barbara["Média Empatia"].iloc[0]
+    dados = {}
 
-    return {
-        "nome1": nomeBarbara,
-        "Média saudacao Barbara": mediaSaudacao,
-        "Média Conhecimento Barbara": mediaConhecimento,
-        "Média Resolução Barbara": mediaResolucao,
-        "Media Empatia Barbara": mediaEmpatia
-    }
+    for _, pessoa in df_avaliacoes.iterrows():
 
+        nome = pessoa["Contemplado"]
+
+        dados[nome] = {
+            "nome": nome,
+            "media_saudacao": pessoa["Média Saudação"],
+            "media_clareza": pessoa["Média Clareza"],
+            "media_conhecimento": pessoa["Média Conhecimento"],
+            "media_empatia": pessoa["Média Empatia"]
+        }
+
+    return dados
 
 app = Flask(__name__)
 

@@ -8,3 +8,4 @@ google-genai
 pandas
 openpyxl
 gunicorn
+openpyxl==3.1.5
