@@ -20,7 +20,7 @@ def capturaExcel():
     df_avaliacoes = pd.read_excel(BytesIO(response.content), sheet_name="media")
 
     dados = {}
-
+    # Para cada linha da planilha,, pegue os dados 
     for _, pessoa in df_avaliacoes.iterrows():
 
         nome = pessoa["Contemplado"]
