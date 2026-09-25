@@ -25,11 +25,11 @@ async function carregarAnalises(){
 
     console.log(dados);
 
-    const BMediaClareza = dados["Barbara Aparecyda"].media_clareza;
-    const BmediaConhecimento = dados["Barbara Aparecyda"].media_conhecimento;
-    const BmediaEmpatia = dados["Barbara Aparecyda"].media_empatia;
-    const BmediaSaudacao = dados["Barbara Aparecyda"].media_saudacao;
-    const BmediaResolucao = dados["Barbara Aparecyda"].media_resolucao;
+    const BMediaClareza = dados["Barbara Aparecyda"].media_clareza.toFixed(2);
+    const BmediaConhecimento = dados["Barbara Aparecyda"].media_conhecimento.toFixed(2);
+    const BmediaEmpatia = dados["Barbara Aparecyda"].media_empatia.toFixed(2);
+    const BmediaSaudacao = dados["Barbara Aparecyda"].media_saudacao.toFixed(2);
+    const BmediaResolucao = dados["Barbara Aparecyda"].media_resolucao.toFixed(2);
     const Bnome = dados["Barbara Aparecyda"].nome;
 
     document.getElementById("mediaClareza").innerText = BMediaClareza;
