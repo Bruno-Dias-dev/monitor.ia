@@ -31,7 +31,8 @@ def capturaExcel():
             "media_saudacao": pessoa["Média Saudação"],
             "media_clareza": pessoa["Média Clareza"],
             "media_conhecimento": pessoa["Média Conhecimento"],
-            "media_empatia": pessoa["Média Empatia"]
+            "media_empatia": pessoa["Média Empatia"],
+            "media_resolucao": pessoa["Média Resolução"]
         }
 
     return dados
