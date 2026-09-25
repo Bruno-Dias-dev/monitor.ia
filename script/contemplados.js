@@ -37,6 +37,64 @@ async function carregarAnalises(){
     document.getElementById("mediaConhecimento").innerText =  BmediaConhecimento;
     document.getElementById("media_empatia").innerText = BmediaEmpatia;
     document.getElementById("mediaResolucao").innerText = BmediaResolucao;
-};
+
+    const ctx = document.getElementById("graficoQualidade");
+
+    const saudacao = BmediaSaudacao;
+    const clareza = BMediaClareza;
+    const conhecimento = BmediaConhecimento;
+    const resolucao = BmediaResolucao;
+    const empatia = BmediaEmpatia;
+
+    document.getElementById("barraSaudacao").style.width = `${saudacao * 10}%`;
+
+    document.getElementById("barraClareza").style.width = `${clareza * 10}%`;
+
+    document.getElementById("barraConhecimento").style.width = `${conhecimento * 10}%`;
+
+    document.getElementById("barraResolucao").style.width = `${resolucao * 10}%`;
+
+    document.getElementById("barraEmpatia").style.width = `${empatia * 10}%`;
+
+
+    new Chart(ctx, {
+        type: "bar",
+
+        data: {
+            labels: [
+                BmediaSaudacao,
+                BMediaClareza,
+                BmediaConhecimento,
+                BmediaResolucao,
+                BmediaEmpatia
+            ],
+
+            datasets: [{
+                label: "Média",
+                data: [
+                    8.5,
+                    7.8,
+                    9.0,
+                    8.2,
+                    9.5
+                ]
+            }]
+        },
+
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 10
+                }
+            }
+        }
+    });
+
+
+
+    };
+
+
 
 carregarAnalises();
