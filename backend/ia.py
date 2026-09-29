@@ -5,7 +5,7 @@ from datetime import timedelta
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from google import genai
 
 
@@ -172,7 +172,12 @@ FORMATO:
 
 
 @app.route("/ia/audio", methods=["POST"])
+@jwt_required()
+
+
 def captura_audio():
+    usuario_id = get_jwt_identity()
+
     print("1 - Requisçãoi recebida")
 
     # Verifica se o arquivo foi enviado
@@ -180,6 +185,7 @@ def captura_audio():
         return jsonify({
             "error": "Áudio não fornecido"
         }), 400
+
 
     audio_file = request.files["audio"]
     print(f"3 - Arquivo recebido: {audio_file.filename}")
@@ -221,7 +227,8 @@ def captura_audio():
 
         # Retorna o resultado
         return jsonify({
-            "resultado": response.text
+            "resultado": response.text,
+            "usuario_id": usuario_id
         }), 200
 
     except Exception as e:

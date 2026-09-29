@@ -89,8 +89,8 @@ document
 
         try {
 
-            // Recupera o JWT salvo no navegador
-            // const token = localStorage.getItem("token");
+            Recupera o JWT salvo no navegador
+            const token = localStorage.getItem("token");
 
 
             const resposta = await fetch(
@@ -112,14 +112,14 @@ document
 
 
             // Token inválido ou expirado
-            // if (resposta.status === 401) {
-            //
-            //    localStorage.removeItem("token");
-            //
-            //    window.location.href = "login.html";
-            //
-            //    return;
-            //}
+            if (resposta.status === 401) {
+            
+                localStorage.removeItem("token");
+            
+                window.location.href = "login.html";
+            
+                return;
+            }
 
 
             if (!resposta.ok) {

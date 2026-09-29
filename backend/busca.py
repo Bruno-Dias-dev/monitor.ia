@@ -1,8 +1,10 @@
 from flask import request, jsonify
+from flask_jwt_extended import jwt_required
 import mysql.connector
 import os
 
 @app.route("/api/avaliacoes", methods=["GET"])
+@jwt_required
 def buscar_avaliacoes():
 
     data_inicial = request.args.get("data_inicial")
