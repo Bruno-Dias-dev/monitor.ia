@@ -1,12 +1,14 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_cors import CORS
-from chatwoot import buscar_chatwoot
+from services.chatwoot import buscar_chatwoot
+from app import app
 
-app = Flask(__name__)
+dashboard_bp = Blueprint("dashboard", __name__)
+
 CORS(app)
 
-@app.route("/api/dashboard", methods=["GET"])
+@dashboard_bp.route("/api/dashboard", methods=["GET"])
 @jwt_required()
 
 def dashboard():

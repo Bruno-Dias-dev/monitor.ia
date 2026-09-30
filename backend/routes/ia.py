@@ -7,17 +7,10 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from google import genai
+from app import app
 
 
 load_dotenv()
-
-app = Flask(__name__)
-
-
-app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(
-    hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_HOURS", "4"))
-)
 
 JWTManager(app)
 CORS(app)

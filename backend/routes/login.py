@@ -1,18 +1,16 @@
 import os
 from datetime import timedelta
-
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 import mysql.connector
 from dotenv import load_dotenv
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token
+from app import app
 
 load_dotenv()
 
-app = Flask(__name__)
-app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_HOURS", "4")))
-JWTManager(app)
+login_bp = Blueprint("login", __name__)
+
 CORS(app)
 
 
@@ -26,7 +24,7 @@ def conectar_db():
     )
 
 
-@app.route("/webhook/login", methods=["POST"])
+@login_bp("/webhook/login", methods=["POST"])
 def login():
     dados = request.get_json()
     
