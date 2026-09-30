@@ -2,7 +2,7 @@ import os
 import json
 from datetime import timedelta
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 from dotenv import load_dotenv
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
@@ -11,6 +11,8 @@ from app import app
 
 
 load_dotenv()
+
+ia_bp = Blueprint("ia", __name__)
 
 JWTManager(app)
 CORS(app)
@@ -164,7 +166,7 @@ FORMATO:
 """
 
 
-@app.route("/ia/audio", methods=["POST"])
+@ia_bp.route("/ia/audio", methods=["POST"])
 @jwt_required()
 
 

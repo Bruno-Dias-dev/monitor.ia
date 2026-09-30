@@ -1,9 +1,12 @@
-from flask import request, jsonify
+from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required
 import mysql.connector
 import os
+from app import app
 
-@app.route("/api/avaliacoes", methods=["GET"])
+busca_bp = Blueprint("busca", __name__)
+
+@busca_bp.route("/api/avaliacoes", methods=["GET"])
 @jwt_required
 def buscar_avaliacoes():
 

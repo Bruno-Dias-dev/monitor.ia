@@ -5,8 +5,7 @@ from decimal import Decimal
 import mysql.connector
 from flask import Blueprint, current_app, jsonify, request
 from flask_jwt_extended import jwt_required
-
-from database import abrir_conexao
+from services.database import abrir_conexao
 
 avaliacoes_bp = Blueprint("avaliacoes", __name__, url_prefix="/api")
 
