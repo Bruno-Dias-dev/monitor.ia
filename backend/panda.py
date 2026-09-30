@@ -5,6 +5,7 @@ from io import BytesIO
 from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_cors import CORS
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # Rodando variáveis de ambiente
 load_dotenv()
@@ -41,6 +42,8 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route("/avaliacoes/media", methods=["GET"])
+@jwt_required()
+
 def avaliacoes_media():
     dados = capturaExcel()
 
