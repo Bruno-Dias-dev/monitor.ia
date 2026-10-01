@@ -3,12 +3,13 @@ import requests
 import pandas as pd
 from io import BytesIO
 from dotenv import load_dotenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Blueprint
 from flask_cors import CORS
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+panda_bp = Blueprint("panda", __name__)
 # Rodando variáveis de ambiente
-load_dotenv()
+# load_dotenv()
 url = os.getenv("EXCEL_URL")
 
 # Captura do Excel
@@ -38,20 +39,12 @@ def capturaExcel():
 
     return dados
 
-app = Flask(__name__)
-CORS(app)
 
-@app.route("/avaliacoes/media", methods=["GET"])
+@panda_bp.route("/avaliacoes/media", methods=["GET"])
 @jwt_required()
 
 def avaliacoes_media():
     dados = capturaExcel()
 
     return jsonify(dados)
-
-if __name__ == "__main__":
-    app.run(
-        host="0.0.0.0",
-        port=5003,
-        debug=True)
 

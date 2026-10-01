@@ -35,7 +35,7 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            token = create_access_token(identity=user[0])
+            token = create_access_token(identity=str(user[0]))
             return jsonify({
                 "ok": True,
                 "token": token,

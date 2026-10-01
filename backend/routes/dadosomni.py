@@ -9,10 +9,11 @@ dashboard_bp = Blueprint("dashboard", __name__)
 
 def dashboard():
 
+    print("Entrou no Dashoard")
+
     usuario_id = get_jwt_identity()
 
     chatwoot = buscar_chatwoot()
-
 
     return jsonify({
         "usuario_id": usuario_id,

@@ -10,6 +10,9 @@ from routes.login import login_bp
 from routes.dadosomni import dashboard_bp
 from routes.busca import busca_bp
 from routes.ia import ia_bp
+from routes.avaliacoes import avaliacoes_bp
+from routes.panda import panda_bp
+
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR.parent / ".env")
@@ -28,6 +31,8 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(busca_bp)
     app.register_blueprint(ia_bp)
+    app.register_blueprint(avaliacoes_bp)
+    app.register_blueprint(panda_bp)
 
     origins = [
         origin.strip()
@@ -41,15 +46,14 @@ def create_app():
         app,
         resources={
             r"/webhook/*": {"origins": origins},
+            r"/avaliacoes/*": {"origins": origins},
             r"/api/*": {"origins": origins},
             r"/ia/*": {"origins": origins},
         },
         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allow_headers=["Content-Type", "Authorization"],
     )
-    from routes.avaliacoes import avaliacoes_bp
 
-    app.register_blueprint(avaliacoes_bp)
 
     return app
 

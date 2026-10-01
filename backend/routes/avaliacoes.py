@@ -59,7 +59,7 @@ def preparar_registro(registro):
 
 @avaliacoes_bp.get("/avaliacoes")
 # Teste temporário sem JWT. Antes de publicar, remova o comentário abaixo.
-# @jwt_required()
+@jwt_required()
 def consultar_avaliacoes():
     data_inicial = request.args.get("data_inicial", "").strip()
     data_final = request.args.get("data_final", "").strip()
