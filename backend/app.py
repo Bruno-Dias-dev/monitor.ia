@@ -2,7 +2,6 @@ import logging
 import os
 from datetime import timedelta
 from pathlib import Path
-
 from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -30,20 +29,24 @@ def create_app():
     app.register_blueprint(busca_bp)
     app.register_blueprint(ia_bp)
 
-    origins = os.getenv("CORS_ORIGINS", "http://127.0.0.1:5500").split(",")
+    origins = [
+        origin.strip()
+        for origin in os.getenv(
+            "CORS_ORIGINS",
+            "http://127.0.0.1:5500,http://localhost:5500",
+        ).split(",")
+        if origin.strip()
+    ]
     CORS(
-    app,
-    resources={
-        r"/api/*": {
-            "origins": [
-                "http://127.0.0.1:5500",
-                "http://localhost:5500"
-            ]
-        }
-    },
-    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"]
-)
+        app,
+        resources={
+            r"/webhook/*": {"origins": origins},
+            r"/api/*": {"origins": origins},
+            r"/ia/*": {"origins": origins},
+        },
+        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allow_headers=["Content-Type", "Authorization"],
+    )
     from routes.avaliacoes import avaliacoes_bp
 
     app.register_blueprint(avaliacoes_bp)

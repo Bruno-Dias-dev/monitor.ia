@@ -1,21 +1,11 @@
-import os
+﻿import os
 import json
 from datetime import timedelta
-
-from flask import Flask, request, jsonify, Blueprint
-from dotenv import load_dotenv
-from flask_cors import CORS
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+from flask import request, jsonify, Blueprint
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from google import genai
-from app import app
-
-
-load_dotenv()
 
 ia_bp = Blueprint("ia", __name__)
-
-JWTManager(app)
-CORS(app)
 
 client = genai.Client(
     api_key=os.environ["GOOGLE_GENAI_API_KEY"]
@@ -23,13 +13,13 @@ client = genai.Client(
 
 
 system_prompt = """
-Você é uma analista especialista em monitoria de qualidade de atendimento telefônico.
+VocÃª Ã© uma analista especialista em monitoria de qualidade de atendimento telefÃ´nico.
 
-Para contexto, somos uma administradora de planos de saúde chamada Grupo Contém.
+Para contexto, somos uma administradora de planos de saÃºde chamada Grupo ContÃ©m.
 
-Sua única função é analisar uma conversa entre atendente e cliente e retornar uma avaliação estruturada.
+Sua Ãºnica funÃ§Ã£o Ã© analisar uma conversa entre atendente e cliente e retornar uma avaliaÃ§Ã£o estruturada.
 
-Analise o áudio recebido e preencha obrigatoriamente:
+Analise o Ã¡udio recebido e preencha obrigatoriamente:
 
 - motivo_contato
 - saudacao
@@ -45,30 +35,30 @@ Analise o áudio recebido e preencha obrigatoriamente:
 - observacoes
 - acao_gerencial
 
-CRITÉRIOS
+CRITÃ‰RIOS
 
-SAUDAÇÃO (0-10)
+SAUDAÃ‡ÃƒO (0-10)
 - cordialidade inicial
-- apresentação
-- educação
+- apresentaÃ§Ã£o
+- educaÃ§Ã£o
 
 CLAREZA (0-10)
 - objetividade
-- fácil entendimento
+- fÃ¡cil entendimento
 - respostas organizadas
 
 CONHECIMENTO (0-10)
-- domínio do assunto
-- informações corretas
-- segurança na resposta
+- domÃ­nio do assunto
+- informaÃ§Ãµes corretas
+- seguranÃ§a na resposta
 
-RESOLUÇÃO (0-10)
+RESOLUÃ‡ÃƒO (0-10)
 - resolveu a demanda
 - encaminhamento correto
-- solução adequada
+- soluÃ§Ã£o adequada
 
 EMPATIA (0-10)
-- educação
+- educaÃ§Ã£o
 - linguagem humanizada
 - interesse em ajudar
 
@@ -77,53 +67,53 @@ ESCALA
 10 = Perfeito, sem qualquer falha.
 9 = Excelente, apenas pequenas melhorias.
 8 = Bom, apresentou algumas falhas.
-7 = Aceitável.
+7 = AceitÃ¡vel.
 6 = Abaixo do esperado.
 5 = Deficiente.
 4 = Muitas falhas.
 3 = Atendimento ruim.
 2 = Muito ruim.
-1 = Quase nenhum critério atendido.
-0 = Critério inexistente.
+1 = Quase nenhum critÃ©rio atendido.
+0 = CritÃ©rio inexistente.
 
 REGRAS
 
 Seja extremamente criteriosa.
 
-Avalie somente com base no conteúdo da conversa.
+Avalie somente com base no conteÃºdo da conversa.
 
-Não faça inferências.
+NÃ£o faÃ§a inferÃªncias.
 
-Se não houver evidência de determinado comportamento, considere que ele não ocorreu.
+Se nÃ£o houver evidÃªncia de determinado comportamento, considere que ele nÃ£o ocorreu.
 
 Sempre reduza a nota quando identificar:
 - cliente repetindo a mesma pergunta
 - atendente ignorando alguma pergunta
-- respostas genéricas
+- respostas genÃ©ricas
 - demora para responder
-- linguagem excessivamente robótica
+- linguagem excessivamente robÃ³tica
 
 VALORES PERMITIDOS
 
 risco_processo:
 - Nenhum risco
-- Informação incorreta
+- InformaÃ§Ã£o incorreta
 - Falha de procedimento
 - Encaminhamento incorreto
-- Violação de processo
+- ViolaÃ§Ã£o de processo
 - Falta de registro
 
 resolvido:
 - Sim
-- Não
+- NÃ£o
 - Parcialmente
 
 reincidencia:
 - Sim
-- Não
-- Não identificado
+- NÃ£o
+- NÃ£o identificado
 
-CLASSIFICAÇÃO
+CLASSIFICAÃ‡ÃƒO
 
 9.0 a 10 = Excelente
 7.0 a 8.9 = Bom
@@ -140,11 +130,11 @@ O resultado deve ser utilizado em score_qualidade.
 
 Responda SOMENTE JSON.
 
-Não escreva explicações.
-Não use markdown.
-Não use blocos de código.
+NÃ£o escreva explicaÃ§Ãµes.
+NÃ£o use markdown.
+NÃ£o use blocos de cÃ³digo.
 Nunca altere os nomes dos campos.
-Se não identificar algo, use "Não identificado".
+Se nÃ£o identificar algo, use "NÃ£o identificado".
 
 FORMATO:
 
@@ -173,12 +163,12 @@ FORMATO:
 def captura_audio():
     usuario_id = get_jwt_identity()
 
-    print("1 - Requisçãoi recebida")
+    print("1 - RequisÃ§Ã£oi recebida")
 
     # Verifica se o arquivo foi enviado
     if "audio" not in request.files:
         return jsonify({
-            "error": "Áudio não fornecido"
+            "error": "Ãudio nÃ£o fornecido"
         }), 400
 
 
@@ -187,12 +177,12 @@ def captura_audio():
 
     if audio_file.filename == "":
         return jsonify({
-            "error": "Arquivo de áudio não informado"
+            "error": "Arquivo de Ã¡udio nÃ£o informado"
         }), 400
 
     temp_path = None
     try:
-        # Salva temporariamente o áudio
+        # Salva temporariamente o Ã¡udio
         temp_path = os.path.join(
             "temp",
             audio_file.filename
@@ -202,13 +192,13 @@ def captura_audio():
         os.makedirs("temp", exist_ok=True)
         audio_file.save(temp_path)
 
-        # Envia o áudio para o Gemini
+        # Envia o Ã¡udio para o Gemini
         audio = client.files.upload(
             file=temp_path
         )
 
         print("5 - Arquivo salvo:", temp_path)
-        # Analisa o áudio
+        # Analisa o Ã¡udio
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=[
@@ -238,7 +228,7 @@ def captura_audio():
             }), 429
 
         return jsonify({
-            "error": "Erro ao processar o áudio.",
+            "error": "Erro ao processar o Ã¡udio.",
             "detalhamento": erro
         }), 500
 
@@ -247,9 +237,3 @@ def captura_audio():
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)
 
-if __name__ == "__main__":
-    app.run(
-        host="0.0.0.0",
-        port=5001,
-        debug=True
-    )

@@ -2,7 +2,6 @@ from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required
 import mysql.connector
 import os
-from app import app
 
 busca_bp = Blueprint("busca", __name__)
 
