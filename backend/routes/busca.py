@@ -2,11 +2,21 @@ from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required
 import mysql.connector
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+load_dotenv(BASE_DIR / ".env")
 
 busca_bp = Blueprint("busca", __name__)
 
 @busca_bp.route("/api/avaliacoes", methods=["GET"])
-@jwt_required
+
+@jwt_required()
 def buscar_avaliacoes():
 
     data_inicial = request.args.get("data_inicial")
@@ -22,10 +32,13 @@ def buscar_avaliacoes():
     try:
         conexao = mysql.connector.connect(
             host=os.environ["DB_HOST2"],
+            port=int(os.environ["DB_PORT2"]),
             user=os.environ["DB_USER2"],
             password=os.environ["DB_PASSWORD2"],
             database=os.environ["DB_NAME2"]
         )
+
+
 
         cursor = conexao.cursor(dictionary=True)
 

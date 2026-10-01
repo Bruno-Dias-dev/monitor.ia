@@ -9,7 +9,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 panda_bp = Blueprint("panda", __name__)
 # Rodando variáveis de ambiente
-# load_dotenv()
 url = os.getenv("EXCEL_URL")
 
 # Captura do Excel
@@ -17,8 +16,6 @@ def capturaExcel():
     response = requests.get(url)
     response.raise_for_status()
     df = pd.read_excel(BytesIO(response.content), sheet_name="media")
-
-#   pd.set_option("display.max_columns", None)
 
     df_avaliacoes = pd.read_excel(BytesIO(response.content), sheet_name="media")
 

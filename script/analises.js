@@ -69,6 +69,12 @@ document
         const inicial = document.getElementById("dataInicial").value;
         const final = document.getElementById("dataFinal").value;
         const botao = document.getElementById("botaoPesquisar");
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            window.location.href = "login.html";
+            return;
+        }
 
         mensagem.className = "message";
 
@@ -89,13 +95,14 @@ document
 
         try {
 
-            Recupera o JWT salvo no navegador
-            const token = localStorage.getItem("token");
-
-
             const resposta = await fetch(
                 `http://127.0.0.1:5001/api/avaliacoes?data_inicial=${encodeURIComponent(inicial)}&data_final=${encodeURIComponent(final)}`,
-
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                    }
+                }
             );
 
 

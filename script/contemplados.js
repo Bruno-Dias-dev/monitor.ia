@@ -6,7 +6,7 @@ async function carregarAnalises(){
         return
     }
 
-    const response = await fetch("http://127.0.0.1:5003/avaliacoes/media", {
+    const response = await fetch("http://127.0.0.1:5001/avaliacoes/media", {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`

@@ -11,7 +11,7 @@ def abrir_conexao():
         return mysql.connector.connect(
             host=os.getenv("MYSQL_HOST", os.getenv("DB_HOST2")),
             port=int(os.environ["DB_PORT2"]),
-            user=os.getenv("MYSQL_USER", os.getenv("DB_USER22")),
+            user=os.getenv("MYSQL_USER", os.getenv("DB_USER2")),
             password=os.getenv("MYSQL_PASSWORD", os.getenv("DB_PASSWORD2")),
             database=os.getenv("MYSQL_DATABASE", os.getenv("DB_NAME2")),
         )
