@@ -13,13 +13,13 @@ client = genai.Client(
 
 
 system_prompt = """
-VocÃª Ã© uma analista especialista em monitoria de qualidade de atendimento telefÃ´nico.
+Você é uma analista especialista em monitoria de qualidade de atendimento telefônico.
 
-Para contexto, somos uma administradora de planos de saÃºde chamada Grupo ContÃ©m.
+Para contexto, somos uma administradora de planos de saúde chamada Grupo Contém.
 
-Sua Ãºnica funÃ§Ã£o Ã© analisar uma conversa entre atendente e cliente e retornar uma avaliaÃ§Ã£o estruturada.
+Sua única função a analisar uma conversa entre atendente e cliente e retornar uma avaliação estruturada.
 
-Analise o Ã¡udio recebido e preencha obrigatoriamente:
+Analise o áudio recebido e preencha obrigatoriamente:
 
 - motivo_contato
 - saudacao
@@ -35,30 +35,30 @@ Analise o Ã¡udio recebido e preencha obrigatoriamente:
 - observacoes
 - acao_gerencial
 
-CRITÃ‰RIOS
+CRITÉRIOS
 
-SAUDAÃ‡ÃƒO (0-10)
+SAUDAÇÃO (0-10)
 - cordialidade inicial
-- apresentaÃ§Ã£o
-- educaÃ§Ã£o
+- apresentação
+- educação
 
 CLAREZA (0-10)
 - objetividade
-- fÃ¡cil entendimento
+- fácil entendimento
 - respostas organizadas
 
 CONHECIMENTO (0-10)
-- domÃ­nio do assunto
-- informaÃ§Ãµes corretas
-- seguranÃ§a na resposta
+- domí­nio do assunto
+- informações corretas
+- segurança na resposta
 
-RESOLUÃ‡ÃƒO (0-10)
+RESOLUÇÃO (0-10)
 - resolveu a demanda
 - encaminhamento correto
-- soluÃ§Ã£o adequada
+- solução adequada
 
 EMPATIA (0-10)
-- educaÃ§Ã£o
+- educação
 - linguagem humanizada
 - interesse em ajudar
 
@@ -67,40 +67,40 @@ ESCALA
 10 = Perfeito, sem qualquer falha.
 9 = Excelente, apenas pequenas melhorias.
 8 = Bom, apresentou algumas falhas.
-7 = AceitÃ¡vel.
+7 = Aceitável.
 6 = Abaixo do esperado.
 5 = Deficiente.
 4 = Muitas falhas.
 3 = Atendimento ruim.
 2 = Muito ruim.
 1 = Quase nenhum critÃ©rio atendido.
-0 = CritÃ©rio inexistente.
+0 = Critério inexistente.
 
 REGRAS
 
 Seja extremamente criteriosa.
 
-Avalie somente com base no conteÃºdo da conversa.
+Avalie somente com base no conteúdo da conversa.
 
-NÃ£o faÃ§a inferÃªncias.
+NÃo faça inferências.
 
-Se nÃ£o houver evidÃªncia de determinado comportamento, considere que ele nÃ£o ocorreu.
+Se nÃo houver evidência de determinado comportamento, considere que ele nÃo ocorreu.
 
 Sempre reduza a nota quando identificar:
 - cliente repetindo a mesma pergunta
 - atendente ignorando alguma pergunta
-- respostas genÃ©ricas
+- respostas genêricas
 - demora para responder
-- linguagem excessivamente robÃ³tica
+- linguagem excessivamente robotica
 
 VALORES PERMITIDOS
 
 risco_processo:
 - Nenhum risco
-- InformaÃ§Ã£o incorreta
+- Informação incorreta
 - Falha de procedimento
 - Encaminhamento incorreto
-- ViolaÃ§Ã£o de processo
+- Violação de processo
 - Falta de registro
 
 resolvido:
@@ -113,7 +113,7 @@ reincidencia:
 - NÃ£o
 - NÃ£o identificado
 
-CLASSIFICAÃ‡ÃƒO
+CLASSIFICAÇÃO
 
 9.0 a 10 = Excelente
 7.0 a 8.9 = Bom
@@ -163,12 +163,12 @@ FORMATO:
 def captura_audio():
     usuario_id = get_jwt_identity()
 
-    print("1 - RequisÃ§Ã£oi recebida")
+    print("1 - Requisição recebida")
 
     # Verifica se o arquivo foi enviado
     if "audio" not in request.files:
         return jsonify({
-            "error": "Ãudio nÃ£o fornecido"
+            "error": "Audio nÃo fornecido"
         }), 400
 
 
@@ -177,12 +177,12 @@ def captura_audio():
 
     if audio_file.filename == "":
         return jsonify({
-            "error": "Arquivo de Ã¡udio nÃ£o informado"
+            "error": "Arquivo de Áudio nÃo informado"
         }), 400
 
     temp_path = None
     try:
-        # Salva temporariamente o Ã¡udio
+        # Salva temporariamente o Áudio
         temp_path = os.path.join(
             "temp",
             audio_file.filename
@@ -192,13 +192,13 @@ def captura_audio():
         os.makedirs("temp", exist_ok=True)
         audio_file.save(temp_path)
 
-        # Envia o Ã¡udio para o Gemini
+        # Envia o Áudio para o Gemini
         audio = client.files.upload(
             file=temp_path
         )
 
         print("5 - Arquivo salvo:", temp_path)
-        # Analisa o Ã¡udio
+        # Analisa o Audio
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=[

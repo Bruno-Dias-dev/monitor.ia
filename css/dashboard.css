@@ -147,6 +147,10 @@
       max-height: 400px;
     }
 
+    .total {
+      font-size: 28px;
+    }
+
     @media (max-width: 900px) {
       .kpi-grid {
         grid-template-columns: 1fr 1fr;
