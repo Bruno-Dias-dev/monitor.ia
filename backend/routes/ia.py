@@ -7,8 +7,12 @@ from google import genai
 
 ia_bp = Blueprint("ia", __name__)
 
+# Rodando variáveis de ambiente
+apiKey = os.getenv("GOOGLE_GENAI_API_KEY")
+
+
 client = genai.Client(
-    api_key=os.environ["GOOGLE_GENAI_API_KEY"]
+    api_key=apiKey
 )
 
 
@@ -161,7 +165,9 @@ FORMATO:
 
 
 def captura_audio():
-    usuario_id = get_jwt_identity()
+    # usuario_id = get_jwt_identity()
+
+    print(apiKey)
 
     print("1 - Requisição recebida")
 
@@ -212,8 +218,8 @@ def captura_audio():
 
         # Retorna o resultado
         return jsonify({
-            "resultado": response.text,
-            "usuario_id": usuario_id
+            "resultado": response.text
+            #"usuario_id": usuario_id
         }), 200
 
     except Exception as e:

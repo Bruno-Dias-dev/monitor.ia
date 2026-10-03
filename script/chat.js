@@ -12,6 +12,8 @@ arquivo.addEventListener("change", () => {
 });
 
 enviar.addEventListener("click", async () => {
+    const token = localStorage.getItem("token");
+
 
     if (!arquivo.files || arquivo.files.length === 0) {
         alert("Selecione o arquivo primeiro.");
@@ -25,8 +27,11 @@ enviar.addEventListener("click", async () => {
 
     try {
         // Dispara a requisição antes de atualizar a interface de carregamento.
-        const request = fetch("http://127.0.0.1:5001/ia/audio", {
+        const request = await fetch("http://127.0.0.1:5001/ia/audio", {
             method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
             body: formData,
             signal: controller.signal
         });
