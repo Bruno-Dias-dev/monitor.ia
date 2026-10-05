@@ -53,8 +53,11 @@ enviar.addEventListener("click", async () => {
         const resposta = document.getElementById("textoResposta");
         const caixaResposta = document.getElementById("caixaResposta");
 
-        resposta.textContent = data.resultado;
+        console.log(data);
+
+        resposta.textContent = JSON.stringify(data.resultado, null, 2);
         caixaResposta.classList.remove("d-none");
+
     } catch (error) {
         console.error("Erro:", error);
         alertBox.textContent = error.name === "AbortError"
