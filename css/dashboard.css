@@ -43,14 +43,6 @@
       background-color: #fff;
     }
 
-    #caixaResposta {
-      width: 80%;
-      padding: 15px 20px;
-      margin-bottom: 20px;
-
-      background-color: #777;
-      border-radius: 16px;
-    }
 
     .actived {
       background-color: #F05A28;
