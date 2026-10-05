@@ -71,7 +71,7 @@
       transform: translateY(-4px);
     }
 
-    #caixaResposta {
+    .caixaDeMensagens {
       width: 65%;
       padding: 15px 20px;
       margin-bottom: 20px;
