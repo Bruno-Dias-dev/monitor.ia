@@ -143,6 +143,8 @@ async function carregarAnalises(){
 
     document.getElementById("barraEmpatia").style.width = `${empatia * 10}%`;
 
+    document.getElementById("barraTotal").style.width = `${Btotal * 10}%`;
+
     // Valdeilson Barra
 
     document.getElementById("barraSaudacao2").style.width = `${VmediaSaudacao * 10}%`;
@@ -155,6 +157,7 @@ async function carregarAnalises(){
 
     document.getElementById("barraEmpatia2").style.width = `${VmediaEmpatia * 10}%`;
 
+    document.getElementById("barraTotal2").style.width = `${Vtotal * 10}%`
 
     // Jessica Barra
 
@@ -168,6 +171,7 @@ async function carregarAnalises(){
 
     document.getElementById("barraEmpatia3").style.width = `${JmediaEmpatia * 10}%`;
 
+    document.getElementById("barraTotal3").style.width = `${Jtotal * 10}%`
 
     new Chart(ctx, {
         type: "bar",
