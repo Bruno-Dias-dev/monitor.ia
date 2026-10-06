@@ -58,35 +58,22 @@
     </div>
 
   </div>
-  <section id="caixaResposta" class="dvtnc d-none" aria-labelledby="tituloAnalises">
-    <div class="caixaDeReposta">
-      <h2 id="tituloAnalises" class="h6 mb-3">Análises realizadas</h2>
-      <div class="table-responsive analysis-table-scroll">
-        <table class="table table-hover align-middle analysis-table">
-          <thead><tr>
-            <th scope="col">Nome do arquivo</th><th scope="col">Data</th>
-            <th scope="col">Contemplado</th><th scope="col">Beneficiário</th>
-            <th scope="col">Notas</th><th scope="col">Score</th>
-            <th scope="col">Classificação</th><th scope="col"><span class="visually-hidden">Ações</span></th>
-          </tr></thead>
-          <tbody id="corpoAnalises"><tr id="estadoAnalises"><td colspan="8" class="text-center text-secondary">Envie um áudio para ver a análise aqui.</td></tr></tbody>
-        </table>
-      </div>
+
+    <div id="caixaResposta" class="caixaDeMensagens">
+    <p id="textoResposta">
+      sasssssssss
+    </p>
+  </div>
+
+  <div id="caixaEnvio" class="caixaDeMensagens">
+    <div id="arquivoResposta">
+      <img src="">
     </div>
-  </section>
-  <div class="divfdp d-flex">
-    <div id="caixaEnvio" class="caixaMensagemEnviada d-none">
-      <div id="arquivoResposta">
-        <img id="fotinha"  src="../img/musicico.webp">
-      </div>
-      <div id="statusArquivoResposta">
-        Arquivo enviado
-      </div>
-      <div id="nomeArquivoResposta">
-        Nome
-      </div>
+    <div id="nomeArquivoResposta">
+      Áudio
     </div>
   </div>
+
   <div class="chat-composer mb-4">
     <form id="iaForm">
 
@@ -114,12 +101,6 @@
 
 </main>
 
-</div>
-<div class="modal fade" id="analiseModal" tabindex="-1" aria-labelledby="analiseModalTitulo" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content">
-    <div class="modal-header"><h2 class="modal-title fs-5" id="analiseModalTitulo">Análise completa</h2><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
-    <div class="modal-body"><pre id="analiseCompleta" class="analysis-json mb-0"></pre></div>
-  </div></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="../script/chat.js"></script>

@@ -6,8 +6,6 @@
 
     main {
       position: relative;
-      min-width: 0;
-      overflow: hidden;
     }
 
     body {
@@ -73,15 +71,6 @@
       transform: translateY(-4px);
     }
 
-    .dvtnc {
-      display: flex;
-      align-items: end;
-      width: min(1100px, calc(100% - 32px));
-      min-width: 0;
-      margin: 0 16px 10px;
-
-    }
-
     .caixaDeMensagens {
       width: 65%;
       padding: 15px 20px;
@@ -89,117 +78,6 @@
       background-color: white;
       border: 1px solid #e7e9ee;
       border-radius: 16px;
-    }
-
-    .caixaDeReposta {
-      width: 100%;
-      min-width: 0;
-      max-height: min(36vh, 340px);
-      padding: 15px 20px;
-      margin-bottom: 0;
-      background-color: white;
-      border: 1px solid #e7e9ee;
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .analysis-table-scroll {
-      max-height: min(29vh, 270px);
-      overflow: auto;
-    }
-
-    .analysis-table {
-      min-width: 940px;
-      table-layout: fixed;
-      margin-bottom: 0;
-    }
-
-    .analysis-table th {
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      background: #fff5f1;
-      color: #8c3518;
-      white-space: nowrap;
-    }
-
-    .analysis-table th:nth-child(1) { width: 160px; }
-    .analysis-table th:nth-child(2) { width: 150px; }
-    .analysis-table th:nth-child(3),
-    .analysis-table th:nth-child(4) { width: 140px; }
-    .analysis-table th:nth-child(5) { width: 230px; }
-    .analysis-table th:nth-child(6) { width: 80px; }
-    .analysis-table th:nth-child(7) { width: 120px; }
-    .analysis-table th:nth-child(8) { width: 120px; }
-
-    .file-name,
-    .analysis-notes {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .file-name { white-space: nowrap; }
-
-    .analysis-notes {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      overflow-wrap: anywhere;
-    }
-
-    .analysis-json {
-      max-height: 65vh;
-      overflow: auto;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .caixaMensagemEnviada {
-      width: 100x;
-      padding: 15px 0px;
-      margin-bottom: 20px;
-      background-color: white;
-      border: 1px solid #e7e9ee;
-      border-radius: 16px;
-    }
-
-    #arquivoResposta {
-      display: flex;
-      justify-content: center;
-      width: 80%;
-      background-color: #F05A28;
-      border-radius: 1px solid #e7e9ee;
-      border-radius: 16px;
-      margin: 0 10px;
-    }
-
-    #caixaEnvio {
-      display: table;
-      justify-content: center;
-
-    }
-    .divfdp {
-      display: flex;
-      justify-content: flex-end;
-      width: 65%;
-      height: auto;
-      box-sizing: border-box;
-    }
-
-    #statusArquivoResposta {
-      font-size: 16px;
-      font-weight: bold;
-      margin: 0 8px;
-    }
-
-    #nomeArquivoResposta {
-      margin-left: 8px;
-    }
-
-    #fotinha {
-      width: 60px;
-      height: auto;
     }
 
     .label {
