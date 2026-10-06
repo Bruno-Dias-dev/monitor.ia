@@ -203,6 +203,25 @@
       white-space: nowrap;
     }
 
+
+    .caixaDeMensagens {
+      width: 40%;
+      padding: 15px 20px;
+      border-radius: 16px;
+    }
+
+    .caixaAudio {
+      width: 120px;
+      background-color: #FFF;
+      border: 1px solid #e7e9ee;
+      border-radius: 16px;
+      
+    }
+
+    #fotinha {
+      width: 50px;
+    }
+
     .send-button {
       flex: 0 0 48px;
       display: grid;
