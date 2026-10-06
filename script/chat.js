@@ -3,21 +3,68 @@ const arquivo = document.getElementById("arquivo");
 const arquivoNome = document.getElementById("arquivoNome");
 const alertBox = document.getElementById("alert");
 const enviar = document.getElementById("enviar");
+const composer = document.querySelector(".chat-composer");
+const caixaResposta = document.getElementById("caixaResposta");
+const audioCaixa = document.getElementById("caixaAudio");
+const nomeArquivoResposta = document.getElementById("nomeArquivoResposta");
+const novaAnalise = document.getElementById("novaAnalise");
 const FETCH_TIMEOUT_MS = 120000;
+
+const camposResultado = [
+    ["acao_gerencial", "Ação gerencial"],
+    ["clareza", "Clareza"],
+    ["classificacao", "Classificação"],
+    ["conhecimento", "Conhecimento"],
+    ["empatia", "Empatia"],
+    ["motivo_contato", "Motivo do contato"],
+    ["observacoes", "Observações"],
+    ["reincidencia", "Reincidência"],
+    ["resolucao", "Resolução"],
+    ["resolvido", "Resolvido"],
+    ["risco_processo", "Risco de processo"],
+    ["saudacao", "Saudação"],
+    ["score_qualidade", "Score de qualidade"]
+];
 
 arquivo.addEventListener("change", () => {
     arquivoNome.textContent = arquivo.files.length > 0
         ? arquivo.files[0].name
         : "Áudio";
-
 });
+
+function mostrarResultado(resultado) {
+    const container = document.getElementById("textoResposta");
+    container.replaceChildren();
+
+    camposResultado.forEach(([chave, titulo]) => {
+        if (resultado[chave] === undefined || resultado[chave] === null || resultado[chave] === "") {
+            return;
+        }
+
+        const item = document.createElement("p");
+        item.className = "resultado-item";
+
+        const rotulo = document.createElement("strong");
+        rotulo.textContent = `${titulo}: `;
+
+        const valor = document.createElement("span");
+        valor.textContent = String(resultado[chave]);
+
+        item.append(rotulo, valor);
+        container.append(item);
+    });
+
+    if (!container.hasChildNodes()) {
+        container.textContent = "A análise foi concluída, mas não há campos para exibir.";
+    }
+}
 
 enviar.addEventListener("click", async () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-        window.location.href =  "login.html";
-        return
+        window.location.href = "login.html";
+        return;
     }
 
     if (!arquivo.files || arquivo.files.length === 0) {
@@ -26,15 +73,19 @@ enviar.addEventListener("click", async () => {
     }
 
     const nomeArquivo = arquivo.files[0].name;
-
     const formData = new FormData();
     formData.append("audio", arquivo.files[0]);
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
+    enviar.disabled = true;
+    enviar.setAttribute("aria-busy", "true");
+    enviar.innerHTML = '<span class="loading-spinner" aria-hidden="true"></span>';
+    enviar.setAttribute("aria-label", "Analisando áudio");
+    alertBox.classList.add("d-none");
+
     try {
-        // Dispara a requisição antes de atualizar a interface de carregamento.
-        const request = await fetch("http://127.0.0.1:5001/ia/audio", {
+        const response = await fetch("http://127.0.0.1:5001/ia/audio", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -43,13 +94,6 @@ enviar.addEventListener("click", async () => {
             signal: controller.signal
         });
 
-        enviar.disabled = true;
-        enviar.setAttribute("aria-busy", "true");
-        enviar.textContent = "...";
-        alertBox.classList.add("d-none");
-
-        const response = await request;
-
         if (!response.ok) {
             alertBox.textContent = `Erro no envio! Status: ${response.status}`;
             alertBox.classList.remove("d-none");
@@ -57,44 +101,41 @@ enviar.addEventListener("click", async () => {
         }
 
         const data = await response.json();
-        
-        // Pega caixa de texto tira o d-none e mostra caixa
-        const audioCaixa = document.getElementById("caixaAudio");
-        audioCaixa.classList.remove("d-none");
-        
-        // coloca o nome do arquivo no card
-        const caixaComNome = document.getElementById("nomeArquivoResposta");
-        caixaComNome.textContent = nomeArquivo;
-
-        const resposta = document.getElementById("textoResposta");
-        const caixaResposta = document.getElementById("caixaResposta");
-
-        console.log(data);
-
-        // resposta.textContent = JSON.stringify(data.resultado, null, 2);
         const resultado = data.resultado;
 
-        resposta.textContent = [
-            `Classificação: ${resultado.classificacao ?? "—"}`,
-            `Score de qualidade: ${resultado.score_qualidade ?? "—"}`,
-            `Resolvido: ${resultado.resolvido ?? "—"}`,
-            `Motivo do contato: ${resultado.motivo_contato ?? "—"}`,
-            `Observações: ${resultado.observacoes ?? "—"}`,
-            `Ação gerencial: ${resultado.acao_gerencial ?? "—"}`
-        ].join("\n\n");
-        
-        caixaResposta.classList.remove("d-none");
+        if (!resultado || typeof resultado !== "object") {
+            throw new Error("A resposta do servidor veio em um formato inesperado.");
+        }
 
+        mostrarResultado(resultado);
+        nomeArquivoResposta.textContent = nomeArquivo;
+        caixaResposta.classList.remove("d-none");
+        audioCaixa.classList.remove("d-none");
+        composer.classList.add("d-none");
+        novaAnalise.classList.remove("d-none");
     } catch (error) {
         console.error("Erro:", error);
         alertBox.textContent = error.name === "AbortError"
             ? "A análise demorou mais que 2 minutos. Tente novamente."
-            : "Não foi possível conectar com o servidor.";
+            : error.message || "Não foi possível conectar com o servidor.";
         alertBox.classList.remove("d-none");
     } finally {
         clearTimeout(timeoutId);
         enviar.disabled = false;
         enviar.removeAttribute("aria-busy");
         enviar.textContent = "➤";
+        enviar.setAttribute("aria-label", "Enviar arquivo");
     }
+});
+
+novaAnalise.addEventListener("click", () => {
+    form.reset();
+    arquivoNome.textContent = "Áudio";
+    document.getElementById("textoResposta").replaceChildren();
+    nomeArquivoResposta.textContent = "";
+    caixaResposta.classList.add("d-none");
+    audioCaixa.classList.add("d-none");
+    novaAnalise.classList.add("d-none");
+    alertBox.classList.add("d-none");
+    composer.classList.remove("d-none");
 });

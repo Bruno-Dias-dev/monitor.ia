@@ -211,50 +211,75 @@
     }
 
     #statusArquivoResposta {
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 13px;
+      font-weight: 600;
+      color: #3c2420;
       text-align: center;
-      display: flex; 
-      justify-content: center;
-      align-items: center;
+      line-height: 1.3;
     }
 
     #nomeArquivoResposta {
       text-align: center;
+      margin-top: 3px;
+      color: #7b7170;
+      font-size: 11px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
 
     #arquivoResposta {
-      background-color: #F05A28;
-      width: 80%;
+      background-color: #fff1eb;
+      width: 100%;
       display: flex;
       justify-content: center;
-      border-radius: 16px;
-      margin-left: 14px;
-      margin-right: 8px;
-      margin-top: 5px;
-      margin-bottom: 2px;
+      border-radius: 11px;
+      margin: 0 0 7px;
+      padding: 4px;
     }
 
     .caixaDeMensagens {
-      width: 40%;
+      width: min(720px, 85%);
       padding: 15px 20px;
       border-radius: 16px;
-      margin-right: 300px;
-      margin-bottom: 50px;
+      align-self: flex-start;
+      margin: 0 0 20px max(16px, 5%);
+      overflow-wrap: anywhere;
+      font-size: 12px;
+    }
+
+    .resultado-item {
+      margin: 0;
+      padding: 7px 0;
+      font-size: 12px;
+      line-height: 1.45;
+      border-bottom: 1px solid #edf0f3;
+    }
+
+    .resultado-item:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .resultado-item strong {
+      color: #3c2420;
     }
 
     .caixaAudio {
-      width: 160px;
-      background-color: #FFF;
+      width: 180px;
+      max-width: calc(100% - 32px);
+      padding: 8px;
+      background-color: #fff;
       border: 1px solid #e7e9ee;
-      border-radius: 16px;
-      margin-left: 750px; 
-      margin-bottom: 50px;
-      
+      border-radius: 14px;
+      box-shadow: 0 5px 16px rgba(27, 31, 35, .06);
+      align-self: flex-end;
+      margin: 0 max(16px, 5%) 20px 0;
+      overflow-wrap: anywhere;
     }
 
     #fotinha {
-      width: 50px;
+      display: block;
+      width: 40px;
     }
 
     .send-button {
@@ -272,6 +297,41 @@
       background: #d94718;
       transform: translateY(-1px);
     }
+
+    .send-button[aria-busy="true"] {
+      cursor: wait;
+      opacity: .75;
+    }
+
+    .loading-spinner {
+      width: 22px;
+      height: 22px;
+      border: 3px solid rgba(255, 255, 255, .45);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: chat-spin .7s linear infinite;
+    }
+
+    @keyframes chat-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .new-analysis-button {
+      padding: 12px 22px;
+      border: 0;
+      border-radius: 12px;
+      background: #F05A28;
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(27, 31, 35, .08);
+      transition: background .2s, transform .2s;
+    }
+
+    .new-analysis-button:hover {
+      background: #d94718;
+      transform: translateY(-1px);
+    }
     .send-button:focus-visible, .file-picker:focus-visible {
       outline: 3px solid rgba(240, 90, 40, .3);
       outline-offset: 2px;
@@ -282,6 +342,15 @@
     }
 
     @media (max-width: 480px) {
+      .caixaDeMensagens {
+        width: calc(100% - 32px);
+        margin-left: 16px;
+      }
+
+      .caixaAudio {
+        margin-right: 16px;
+      }
+
       #iaForm {
         gap: 8px;
       }
