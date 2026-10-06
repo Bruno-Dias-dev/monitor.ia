@@ -9,16 +9,23 @@ arquivo.addEventListener("change", () => {
     arquivoNome.textContent = arquivo.files.length > 0
         ? arquivo.files[0].name
         : "Áudio";
+
 });
 
 enviar.addEventListener("click", async () => {
     const token = localStorage.getItem("token");
 
+    if (!token) {
+        window.location.href =  "login.html";
+        return
+    }
 
     if (!arquivo.files || arquivo.files.length === 0) {
         alert("Selecione o arquivo primeiro.");
         return;
     }
+
+    const nomeArquivo = arquivo.files[0].name;
 
     const formData = new FormData();
     formData.append("audio", arquivo.files[0]);
@@ -50,12 +57,32 @@ enviar.addEventListener("click", async () => {
         }
 
         const data = await response.json();
+        
+        // Pega caixa de texto tira o d-none e mostra caixa
+        const audioCaixa = document.getElementById("caixaAudio");
+        audioCaixa.classList.remove("d-none");
+        
+        // coloca o nome do arquivo no card
+        const caixaComNome = document.getElementById("nomeArquivoResposta");
+        caixaComNome.textContent = nomeArquivo;
+
         const resposta = document.getElementById("textoResposta");
         const caixaResposta = document.getElementById("caixaResposta");
 
         console.log(data);
 
-        resposta.textContent = JSON.stringify(data.resultado, null, 2);
+        // resposta.textContent = JSON.stringify(data.resultado, null, 2);
+        const resultado = data.resultado;
+
+        resposta.textContent = [
+            `Classificação: ${resultado.classificacao ?? "—"}`,
+            `Score de qualidade: ${resultado.score_qualidade ?? "—"}`,
+            `Resolvido: ${resultado.resolvido ?? "—"}`,
+            `Motivo do contato: ${resultado.motivo_contato ?? "—"}`,
+            `Observações: ${resultado.observacoes ?? "—"}`,
+            `Ação gerencial: ${resultado.acao_gerencial ?? "—"}`
+        ].join("\n\n");
+        
         caixaResposta.classList.remove("d-none");
 
     } catch (error) {

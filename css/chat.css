@@ -12,6 +12,13 @@
       font-family: Segoe UI, Arial, sans-serif;
       background: #f8f9fb;
       color: #222;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+
+    main.vh-100 {
+      height: auto !important;
+      min-height: 100vh;
     }
 
     .container {
@@ -74,7 +81,7 @@
     .caixaDeMensagens {
       width: 65%;
       padding: 15px 20px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       background-color: white;
       border: 1px solid #e7e9ee;
       border-radius: 16px;
@@ -237,7 +244,7 @@
     }
 
     .caixaAudio {
-      width: 140px;
+      width: 160px;
       background-color: #FFF;
       border: 1px solid #e7e9ee;
       border-radius: 16px;
