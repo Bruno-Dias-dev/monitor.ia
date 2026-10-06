@@ -203,18 +203,46 @@
       white-space: nowrap;
     }
 
+    #statusArquivoResposta {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      display: flex; 
+      justify-content: center;
+      align-items: center;
+    }
+
+    #nomeArquivoResposta {
+      text-align: center;
+    }
+
+    #arquivoResposta {
+      background-color: #F05A28;
+      width: 80%;
+      display: flex;
+      justify-content: center;
+      border-radius: 16px;
+      margin-left: 14px;
+      margin-right: 8px;
+      margin-top: 5px;
+      margin-bottom: 2px;
+    }
 
     .caixaDeMensagens {
       width: 40%;
       padding: 15px 20px;
       border-radius: 16px;
+      margin-right: 300px;
+      margin-bottom: 50px;
     }
 
     .caixaAudio {
-      width: 120px;
+      width: 140px;
       background-color: #FFF;
       border: 1px solid #e7e9ee;
       border-radius: 16px;
+      margin-left: 750px; 
+      margin-bottom: 50px;
       
     }
 
