@@ -22,10 +22,10 @@ load_dotenv(BASE_DIR / ".env", override=True)
 def create_app():
     """Cria e configura a aplicação Flask."""
     app = Flask(__name__)
-    # app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
-    # app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_HOURS", "4")))
+    app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_HOURS", "4")))
     
-    # jwt = JWTManager(app)
+    jwt = JWTManager(app)
 
     app.register_blueprint(login_bp)
     app.register_blueprint(dashboard_bp)

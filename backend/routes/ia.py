@@ -230,7 +230,7 @@ def captura_audio():
         "acao_gerencial": "Orientar a atendente a não fornecer informações especulativas sem confirmação, realizar a investigação completa da divergência apresentada pelo cliente e, quando a demanda depender de outro setor, fornecer o canal correto ou realizar o encaminhamento adequado."
         }
 
-        responeJson = json.dumps(response, ensure_ascii=False, indent=4)
+        responseJson = json.dumps(response, ensure_ascii=False, indent=4)
 
         print("7 - Arquivo enviado para Gemini")
         print("10 - Retornando resposta para navegador")
