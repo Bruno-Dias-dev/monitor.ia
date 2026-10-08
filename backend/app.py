@@ -12,7 +12,7 @@ from routes.busca import busca_bp
 from routes.ia import ia_bp
 from routes.avaliacoes import avaliacoes_bp
 from routes.panda import panda_bp
-
+from routes.teste2 import registro_bp
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR.parent / ".env")
@@ -22,10 +22,10 @@ load_dotenv(BASE_DIR / ".env", override=True)
 def create_app():
     """Cria e configura a aplicação Flask."""
     app = Flask(__name__)
-    app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_HOURS", "4")))
+    # app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
+    # app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_HOURS", "4")))
     
-    jwt = JWTManager(app)
+    # jwt = JWTManager(app)
 
     app.register_blueprint(login_bp)
     app.register_blueprint(dashboard_bp)
@@ -33,6 +33,7 @@ def create_app():
     app.register_blueprint(ia_bp)
     app.register_blueprint(avaliacoes_bp)
     app.register_blueprint(panda_bp)
+    app.register_blueprint(registro_bp)
 
     origins = [
         origin.strip()
@@ -49,6 +50,7 @@ def create_app():
             r"/avaliacoes/*": {"origins": origins},
             r"/api/*": {"origins": origins},
             r"/ia/*": {"origins": origins},
+            r"/registro/*": {"origins": origins}
         },
         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allow_headers=["Content-Type", "Authorization"],

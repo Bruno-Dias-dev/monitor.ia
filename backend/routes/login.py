@@ -23,7 +23,7 @@ def login():
         return jsonify({"error": "Dados não fornecidos"}), 400
     
     email = dados.get("email")
-    senha = dados.get("senha")
+    senha = dados.get("senha")  
 
     try:
         db = conectar_db()
@@ -36,6 +36,7 @@ def login():
 
         if user:
             token = create_access_token(identity=str(user[0]))
+            print(token)
             return jsonify({
                 "ok": True,
                 "token": token,
