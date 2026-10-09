@@ -12,7 +12,7 @@ from routes.busca import busca_bp
 from routes.ia import ia_bp
 from routes.avaliacoes import avaliacoes_bp
 from routes.panda import panda_bp
-from routes.teste2 import registro_bp
+from routes.registro import registro_bp
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR.parent / ".env")
