@@ -90,7 +90,7 @@
     .label {
       font-size: 14px;
       color: #777;
-      margin-bottom: 10px;
+      margin-bottom: 0px;
     }
 
     .value {
@@ -140,7 +140,7 @@
     }
 
     .chat-composer {
-      width: min(720px, calc(100% - 32px));
+      width: min(520px, calc(100% - 32px));
       padding: 8px;
       background: #fff;
       border: 1px solid #e7e9ee;
@@ -151,7 +151,7 @@
     #iaForm {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       width: 100%;
     }
 
@@ -161,11 +161,12 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 14px;
+      padding: 5px 72px;
       border: 1px dashed #f5a182;
       border-radius: 11px;
       background: #fff9f7;
       cursor: pointer;
+      margin-top: 10px;
       transition: background .2s, border-color .2s, transform .2s;
     }
 
@@ -337,8 +338,38 @@
       outline-offset: 2px;
     }
 
+    .form-label {
+      padding-left: 0px;
+      position: relative;
+      left: -40px;
+    }
+
+    #clienteLabel {
+      left: -85px;
+    }
+
+    #contempladoLabel {
+      left: -70px;
+    }
+    
+
     .resposta {
       background-color: #ff0000;
+    }
+    .form-control {
+      width: 300px;
+      margin-top: 0px;
+    }
+
+    .form-control:focus {
+      border-color: #d94718;    
+      box-shadow: 0 0 0 0.2rem rgba(224, 65, 12, 0.15);
+      outline: none;
+    }
+
+    #enviar {
+      margin-left: 420px;
+      width: 80px;
     }
 
     @media (max-width: 480px) {
@@ -352,7 +383,7 @@
       }
 
       #iaForm {
-        gap: 8px;
+        gap: 4px;
       }
       .file-picker { 
         padding: 8px; 

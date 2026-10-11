@@ -77,14 +77,16 @@
 
   <div class="chat-composer mb-4">
     <form id="iaForm" class="d-flex flex-column">
-      <label for="texto 1">Informe a data do atendimento</label>
-      <input type="date" id="data" required>
+      <h2>Avaliação do atendimento</h2>
 
-      <label>Nome do contemplado</label>
-      <input type="text" id="contemplado" required>
+      <label for="texto 1" class="form-label">Informe a data do atendimento</label>
+      <input class="form-control" type="date" id="data" required>
 
-      <label>Nome do cliente</label>
-      <input type="text" id="cliente" required>
+      <label class="form-label" id="contempladoLabel">Nome do contemplado</label>
+      <input type="text" class="form-control" id="contemplado" required>
+
+      <label class="form-label" id="clienteLabel">Nome do cliente</label>
+      <input type="text" id="cliente" class="form-control" required>
 
       <label for="arquivo" class="file-picker">
         <span class="file-picker-icon" aria-hidden="true">+</span>

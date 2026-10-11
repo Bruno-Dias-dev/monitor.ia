@@ -91,7 +91,6 @@ enviar.addEventListener("click", async () => {
     formData.append("data", dataAvaliacao);
 
     console.log(formData);
-
     
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
