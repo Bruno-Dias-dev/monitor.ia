@@ -172,10 +172,21 @@ def captura_audio():
 
     print("1 - Requisição recebida")
 
+    cliente = request.form.get("cliente", "").strip()
+    contemplado = request.form.get("contemplado", "").strip()
+    data = request.form.get("data", "").strip()
+
+    print(data, cliente, contemplado)
+
     # Verifica se o arquivo foi enviado
     if "audio" not in request.files:
         return jsonify({
             "error": "Audio nÃo fornecido"
+        }), 400
+    
+    if not cliente or not contemplado or not data:
+        return jsonify({
+            "error": "Texto não fornecido"
         }), 400
 
 

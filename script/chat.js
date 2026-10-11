@@ -67,14 +67,32 @@ enviar.addEventListener("click", async () => {
         return;
     }
 
+    const contemplado = document.getElementById("contemplado").value.trim();
+    const cliente = document.getElementById("cliente").value.trim();
+    const dataAvaliacao = document.getElementById("data").value.trim();
+
+    console.log(contemplado, cliente, dataAvaliacao);
+
     if (!arquivo.files || arquivo.files.length === 0) {
         alert("Selecione o arquivo primeiro.");
+        return;
+    } else if (!cliente || !contemplado || !dataAvaliacao) {
+        alert("Insira todos os valores");
         return;
     }
 
     const nomeArquivo = arquivo.files[0].name;
+
+    // Adicionando itens ao formulário
     const formData = new FormData();
     formData.append("audio", arquivo.files[0]);
+    formData.append("cliente", cliente);
+    formData.append("contemplado", contemplado);
+    formData.append("data", dataAvaliacao);
+
+    console.log(formData);
+
+    
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 

@@ -41,36 +41,36 @@ def registro():
         acaoGerencial = dados.get("acao_gerencial")
         criadoEm = dados.get("criado_em")
 
-try:
-        db = conectar_db_avaliacoes
-        cursor = db.cursor()
-        cursor.execute(
-                """INSERT INTO avaliacao_atendimentos (identificador_unico, data, conversacao, canal, contemplado, beneficiario, numero, saudacao, clareza, conhecimento, resolucao, empatia, score_qualidade, risco_processo, resolvido,  reincidencia, observacoes, acao_gerencial, criado_em)
-                VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-        (
-            identificadorUnico,
-            data,
-            conversacao,
-            canal,
-            contemplado,
-            beneficiario,
-            numero,
-            motivoContato,
-            saudacao,
-            clareza,
-            conhecimento,
-            resolucao,
-            empatia,
-            scoreQualidade,
-            classificacao,
-            riscoProcesso,
-            resolvido,
-            reincidencia,
-            observacoes,
-            acaoGerencial,
-            criadoEm
-        )
-    )
+# try:
+#         db = conectar_db_avaliacoes
+#         cursor = db.cursor()
+#         cursor.execute(
+#                 """INSERT INTO avaliacao_atendimentos (identificador_unico, data, conversacao, canal, contemplado, beneficiario, numero, saudacao, clareza, conhecimento, resolucao, empatia, score_qualidade, risco_processo, resolvido,  reincidencia, observacoes, acao_gerencial, criado_em)
+#                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+#         (
+#             identificadorUnico,
+#             data,
+#             conversacao,
+#             canal,
+#             contemplado,
+#             beneficiario,
+#             numero,
+#             motivoContato,
+#             saudacao,
+#             clareza,
+#             conhecimento,
+#             resolucao,
+#             empatia,
+#             scoreQualidade,
+#             classificacao,
+#             riscoProcesso,
+#             resolvido,
+#             reincidencia,
+#             observacoes,
+#             acaoGerencial,
+#             criadoEm
+#         )
+#     )
 
 #         db.commit()
 
