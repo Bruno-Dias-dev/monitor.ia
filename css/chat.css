@@ -140,8 +140,8 @@
     }
 
     .chat-composer {
-      width: min(520px, calc(100% - 32px));
-      padding: 8px;
+      width: min(680px, calc(100% - 32px));
+      padding: 32px;
       background: #fff;
       border: 1px solid #e7e9ee;
       border-radius: 16px;
@@ -151,17 +151,25 @@
     #iaForm {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
     }
 
+    #iaForm h2 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      text-align: center;
+    }
+
     .file-picker {
-      flex: 1;
+      flex: 0 0 auto;
       min-width: 0;
+      width: min(440px, 100%);
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 12px;
-      padding: 5px 72px;
+      padding: 8px 14px;
       border: 1px dashed #f5a182;
       border-radius: 11px;
       background: #fff9f7;
@@ -339,17 +347,17 @@
     }
 
     .form-label {
-      padding-left: 0px;
-      position: relative;
-      left: -40px;
+      width: min(440px, 100%);
+      margin: 0;
+      font-size: 17px;
     }
 
     #clienteLabel {
-      left: -85px;
+      left: 0;
     }
 
     #contempladoLabel {
-      left: -70px;
+      left: 0;
     }
     
 
@@ -357,8 +365,10 @@
       background-color: #ff0000;
     }
     .form-control {
-      width: 300px;
+      width: min(440px, 100%);
+      min-height: 48px;
       margin-top: 0px;
+      font-size: 17px;
     }
 
     .form-control:focus {
@@ -368,7 +378,8 @@
     }
 
     #enviar {
-      margin-left: 420px;
+      align-self: flex-end;
+      margin-left: 0;
       width: 80px;
     }
 
