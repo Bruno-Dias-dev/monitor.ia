@@ -1,10 +1,9 @@
 ﻿import os
 import json
-from datetime import timedelta
 from flask import request, jsonify, Blueprint
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
 from google import genai
-import json
+from werkzeug.utils import secure_filename
 
 ia_bp = Blueprint("ia", __name__)
 
@@ -16,6 +15,15 @@ client = genai.Client(
     api_key=apiKey
 )
 
+
+def conectar_db_avaliacoes():
+    return mysql.connector.connect(
+        host=os.environ["DB_HOST2"],
+        port=int(os.environ["DB_PORT2"]),
+        user=os.environ["DB_USER2"],
+        password=os.environ["DB_PASSWORD2"],
+        database=os.environ["DB_NAME2"]
+    )
 
 system_prompt = """
 Você é uma analista especialista em monitoria de qualidade de atendimento telefônico.
@@ -129,7 +137,7 @@ IMPORTANTE
 
 Calcule:
 
-(score_saudacao + score_clareza + score_conhecimento + score_resolucao + score_empatia) / 5
+(saudacao + clareza + conhecimento + resolucao + empatia) / 5
 
 O resultado deve ser utilizado em score_qualidade.
 
@@ -168,8 +176,6 @@ FORMATO:
 def captura_audio():
     # usuario_id = get_jwt_identity()
 
-    print(apiKey)
-
     print("1 - Requisição recebida")
 
     cliente = request.form.get("cliente", "").strip()
@@ -199,11 +205,12 @@ def captura_audio():
         }), 400
 
     temp_path = None
+
     try:
         # Salva temporariamente o Áudio
         temp_path = os.path.join(
             "temp",
-            audio_file.filename
+            secure_filename(audio_file.filename)
         )
 
         print("4 - Salvando arquivo...")
@@ -211,48 +218,43 @@ def captura_audio():
         audio_file.save(temp_path)
 
         # Envia o Áudio para o Gemini
-#        audio = client.files.upload(
-#            file=temp_path
-#        )
+        audio = client.files.upload(file=temp_path)
 
-#        print("5 - Arquivo salvo:", temp_path)
+        print("5 - Arquivo salvo:", temp_path)
         # Analisa o Audio
-#        response = client.models.generate_content(
-#            model="gemini-2.5-flash",
-#            contents=[
-#                audio,
-#                system_prompt
-#            ]
-#        )
-
-        response = {
-        "motivo_contato": "Cliente entrou em contato para esclarecer a diferença no valor do boleto, que aumentou de R$ 450 para R$ 520.",
-        "saudacao": 7,
-        "clareza": 6,
-        "conhecimento": 5,
-        "resolucao": 4,
-        "empatia": 6,
-        "score_qualidade": 5.6,
-        "classificacao": "Regular",
-        "risco_processo": "Informação incorreta",
-        "resolvido": "Não",
-        "reincidencia": "Não identificado",
-        "observacoes": "A atendente realizou a identificação do cliente e consultou o boleto, porém não esclareceu o motivo exato do aumento. Informou que provavelmente se tratava de um reajuste sem confirmar a informação, caracterizando resposta genérica e especulativa. A cliente repetiu a dúvida e solicitou o contato do setor responsável, mas a atendente não forneceu um canal específico, orientando apenas que procurasse no site. A demanda permaneceu sem solução.",
-        "acao_gerencial": "Orientar a atendente a não fornecer informações especulativas sem confirmação, realizar a investigação completa da divergência apresentada pelo cliente e, quando a demanda depender de outro setor, fornecer o canal correto ou realizar o encaminhamento adequado."
-        }
-
-        responseJson = json.dumps(response, ensure_ascii=False, indent=4)
+        response = client.models.generate_content(
+            model="gemini-3.8-flash",
+            contents=[audio, system_prompt],
+            config={"response_mime_type": "application/json"},
+        )
+        resultado = json.loads(response.text)
 
         print("7 - Arquivo enviado para Gemini")
         print("10 - Retornando resposta para navegador")
 
-        print(response)
+        conectar_db_avaliacoes()
+
+        motivoContato = resultado["motivo_contato"]
+        saudacao = resultado["saudacao"] 
+        clareza = resultado["clareza"]
+        conhecimento = resultado["conhecimento"]
+        resolucao = resultado["resolucao"]
+        empatia = resultado["empatia"]
+        scoreQualidade = resultado["score_qualidade"]
+        classificacao = resultado["classificacao"]
+        riscoProcesso = resultado["risco_processo"]
+        resolvido = resultado["resolvido"]
+        reincidencia = resultado["reincidencia"]
+        observacoes = resultado["observacoes"]
+        acao_gerencial = resultado["acao_gerencial"]
+
+
+
 
         # Retorna o resultado
         return jsonify({
-            "resultado": response
-            #"resultado": response.text
-            #"usuario_id": usuario_id
+            "resultado": resultado
+            # "usuario_id": usuario_id
         }), 200
 
     except Exception as e:
