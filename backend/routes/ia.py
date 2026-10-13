@@ -1,5 +1,8 @@
 ﻿import os
 import json
+import uuid
+from datetime import datetime
+import mysql.connector
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required
 from google import genai
@@ -20,7 +23,7 @@ def conectar_db_avaliacoes():
     return mysql.connector.connect(
         host=os.environ["DB_HOST2"],
         port=int(os.environ["DB_PORT2"]),
-        user=os.environ["DB_USER2"],
+        user=os.environ["DB_USER22"],
         password=os.environ["DB_PASSWORD2"],
         database=os.environ["DB_NAME2"]
     )
@@ -181,8 +184,9 @@ def captura_audio():
     cliente = request.form.get("cliente", "").strip()
     contemplado = request.form.get("contemplado", "").strip()
     data = request.form.get("data", "").strip()
+    numero = request.form.get("numero", "").strip()
 
-    print(data, cliente, contemplado)
+    print(data, cliente, contemplado, numero)
 
     # Verifica se o arquivo foi enviado
     if "audio" not in request.files:
@@ -205,6 +209,8 @@ def captura_audio():
         }), 400
 
     temp_path = None
+    db = None
+    cursor = None
 
     try:
         # Salva temporariamente o Áudio
@@ -232,29 +238,46 @@ def captura_audio():
         print("7 - Arquivo enviado para Gemini")
         print("10 - Retornando resposta para navegador")
 
-        conectar_db_avaliacoes()
+        canal = "55PABX"
+        conversacao = "audio"
 
-        motivoContato = resultado["motivo_contato"]
-        saudacao = resultado["saudacao"] 
-        clareza = resultado["clareza"]
-        conhecimento = resultado["conhecimento"]
-        resolucao = resultado["resolucao"]
-        empatia = resultado["empatia"]
-        scoreQualidade = resultado["score_qualidade"]
-        classificacao = resultado["classificacao"]
-        riscoProcesso = resultado["risco_processo"]
-        resolvido = resultado["resolvido"]
-        reincidencia = resultado["reincidencia"]
-        observacoes = resultado["observacoes"]
-        acao_gerencial = resultado["acao_gerencial"]
-
-
-
+        db = conectar_db_avaliacoes()
+        cursor = db.cursor()
+        cursor.execute(
+            """INSERT INTO avaliacao_atendimentos (
+                identificador_unico, data, conversacao, canal, contemplado,
+                beneficiario, numero, saudacao, clareza, conhecimento,
+                resolucao, empatia, score_qualidade, risco_processo, resolvido,
+                reincidencia, observacoes, acao_gerencial, criado_em
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            (
+                str(uuid.uuid4()),
+                data,
+                conversacao,
+                canal,
+                contemplado,
+                cliente,
+                numero,
+                resultado["saudacao"],
+                resultado["clareza"],
+                resultado["conhecimento"],
+                resultado["resolucao"],
+                resultado["empatia"],
+                resultado["score_qualidade"],
+                resultado["risco_processo"],
+                resultado["resolvido"],
+                resultado["reincidencia"],
+                resultado["observacoes"],
+                resultado["acao_gerencial"],
+                datetime.now(),
+            ),
+        )
+        db.commit()
 
         # Retorna o resultado
         return jsonify({
             "resultado": resultado
-            # "usuario_id": usuario_id
+#            "usuario_id": usuario_id
         }), 200
 
     except Exception as e:
@@ -274,6 +297,10 @@ def captura_audio():
         }), 500
 
     finally:
+        if cursor is not None:
+            cursor.close()
+        if db is not None and db.is_connected():
+            db.close()
         # Remove o arquivo temporario, mesmo quando ocorrer erro.
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)

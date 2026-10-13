@@ -59,7 +59,8 @@ function mostrarResultado(resultado) {
     }
 }
 
-enviar.addEventListener("click", async () => {
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -70,8 +71,11 @@ enviar.addEventListener("click", async () => {
     const contemplado = document.getElementById("contemplado").value.trim();
     const cliente = document.getElementById("cliente").value.trim();
     const dataAvaliacao = document.getElementById("data").value.trim();
+    const numerocliente = document.getElementById("numerocliente").value.trim();
+    
+    console.log(contemplado, cliente, dataAvaliacao, numerocliente);
 
-    console.log(contemplado, cliente, dataAvaliacao);
+    Number(numerocliente);
 
     if (!arquivo.files || arquivo.files.length === 0) {
         alert("Selecione o arquivo primeiro.");
@@ -89,7 +93,7 @@ enviar.addEventListener("click", async () => {
     formData.append("cliente", cliente);
     formData.append("contemplado", contemplado);
     formData.append("data", dataAvaliacao);
-
+    formData.append("numero", numerocliente);
     console.log(formData);
     
     const controller = new AbortController();
