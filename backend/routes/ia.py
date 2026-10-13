@@ -7,6 +7,9 @@ from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required
 from google import genai
 from werkzeug.utils import secure_filename
+from random import randint
+
+numero_0a10000 = randint(0, 10000)
 
 ia_bp = Blueprint("ia", __name__)
 
@@ -239,7 +242,8 @@ def captura_audio():
         print("10 - Retornando resposta para navegador")
 
         canal = "55PABX"
-        conversacao = "audio"
+        conversacao = json.dumps("audio")
+
 
         db = conectar_db_avaliacoes()
         cursor = db.cursor()
@@ -251,7 +255,7 @@ def captura_audio():
                 reincidencia, observacoes, acao_gerencial, criado_em
             ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
             (
-                str(uuid.uuid4()),
+                numero_0a10000,
                 data,
                 conversacao,
                 canal,

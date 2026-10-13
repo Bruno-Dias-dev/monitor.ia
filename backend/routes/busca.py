@@ -33,7 +33,7 @@ def buscar_avaliacoes():
         conexao = mysql.connector.connect(
             host=os.environ["DB_HOST2"],
             port=int(os.environ["DB_PORT2"]),
-            user=os.environ["DB_USER2"],
+            user=os.environ["DB_USER22"],
             password=os.environ["DB_PASSWORD2"],
             database=os.environ["DB_NAME2"]
         )
