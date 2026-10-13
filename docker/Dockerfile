@@ -7,11 +7,12 @@ WORKDIR /app
 
 RUN addgroup --system app && adduser --system --ingroup app app
 
-COPY requirements.txt .
+COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --chown=app:app . .
+COPY --chown=app:app backend/ .
 
 USER app
 
-EXPOSE 5000 5001
+EXPOSE 5001
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "2", "--timeout", "180", "app:app"]

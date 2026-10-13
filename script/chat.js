@@ -111,7 +111,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
         // A rota e protegida por JWT e deve responder com { resultado: { ...campos da IA } }.
-        const response = await fetch("http://127.0.0.1:5001/ia/audio", {
+        const response = await fetch("/ia/audio", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`
