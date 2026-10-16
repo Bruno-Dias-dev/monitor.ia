@@ -36,7 +36,6 @@ def login():
 
         if user:
             token = create_access_token(identity=str(user[0]))
-            print(token)
             return jsonify({
                 "ok": True,
                 "token": token,

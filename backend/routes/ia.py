@@ -1,5 +1,6 @@
-﻿import os
+import os
 import json
+import tempfile
 import uuid
 from datetime import datetime
 import mysql.connector
@@ -189,8 +190,6 @@ def captura_audio():
     data = request.form.get("data", "").strip()
     numero = request.form.get("numero", "").strip()
 
-    print(data, cliente, contemplado, numero)
-
     # Verifica se o arquivo foi enviado
     if "audio" not in request.files:
         return jsonify({
@@ -204,8 +203,6 @@ def captura_audio():
 
 
     audio_file = request.files["audio"]
-    print(f"3 - Arquivo recebido: {audio_file.filename}")
-
     if audio_file.filename == "":
         return jsonify({
             "error": "Arquivo de Áudio nÃo informado"
@@ -217,19 +214,19 @@ def captura_audio():
 
     try:
         # Salva temporariamente o Áudio
-        temp_path = os.path.join(
-            "temp",
-            secure_filename(audio_file.filename)
-        )
-
         print("4 - Salvando arquivo...")
-        os.makedirs("temp", exist_ok=True)
+        extensao = os.path.splitext(secure_filename(audio_file.filename))[1]
+        with tempfile.NamedTemporaryFile(
+            prefix="monitor-ia-",
+            suffix=extensao,
+            delete=False,
+        ) as arquivo_temporario:
+            temp_path = arquivo_temporario.name
         audio_file.save(temp_path)
 
         # Envia o Áudio para o Gemini
         audio = client.files.upload(file=temp_path)
 
-        print("5 - Arquivo salvo:", temp_path)
         # Analisa o Audio
         response = client.models.generate_content(
             model="gemini-3.8-flash",
