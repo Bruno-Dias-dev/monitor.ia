@@ -1,4 +1,4 @@
-import os
+﻿import os
 import json
 import logging
 import tempfile
@@ -293,7 +293,8 @@ def captura_audio():
             "resultado": resultado
 #            "usuario_id": usuario_id
         }), 200
-
+    
+        print(resultado)
     except Exception as e:
         logger.exception('audio_request=%s etapa=%s falha', request_id, etapa)
 
