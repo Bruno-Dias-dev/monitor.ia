@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 import tempfile
 import uuid
 from datetime import datetime
@@ -13,6 +14,7 @@ from random import randint
 numero_0a10000 = randint(0, 10000)
 
 ia_bp = Blueprint("ia", __name__)
+logger = logging.getLogger(__name__)
 
 # Rodando variáveis de ambiente
 apiKey = os.getenv("GOOGLE_GENAI_API_KEY")
@@ -183,7 +185,9 @@ FORMATO:
 def captura_audio():
     # usuario_id = get_jwt_identity()
 
-    print("1 - Requisição recebida")
+    request_id = uuid.uuid4().hex[:8]
+    etapa = 'validar_requisicao'
+    logger.info('audio_request=%s etapa=%s', request_id, etapa)
 
     cliente = request.form.get("cliente", "").strip()
     contemplado = request.form.get("contemplado", "").strip()
@@ -214,7 +218,8 @@ def captura_audio():
 
     try:
         # Salva temporariamente o Áudio
-        print("4 - Salvando arquivo...")
+        etapa = 'salvar_audio_temporario'
+        logger.info('audio_request=%s etapa=%s', request_id, etapa)
         extensao = os.path.splitext(secure_filename(audio_file.filename))[1]
         with tempfile.NamedTemporaryFile(
             prefix="monitor-ia-",
@@ -225,25 +230,32 @@ def captura_audio():
         audio_file.save(temp_path)
 
         # Envia o Áudio para o Gemini
+        etapa = 'enviar_audio_gemini'
+        logger.info('audio_request=%s etapa=%s', request_id, etapa)
         audio = client.files.upload(file=temp_path)
 
         # Analisa o Audio
+        etapa = 'gerar_avaliacao_gemini'
+        logger.info('audio_request=%s etapa=%s', request_id, etapa)
         response = client.models.generate_content(
             model="gemini-3.8-flash",
             contents=[audio, system_prompt],
             config={"response_mime_type": "application/json"},
         )
+        etapa = 'interpretar_resposta_gemini'
         resultado = json.loads(response.text)
 
-        print("7 - Arquivo enviado para Gemini")
-        print("10 - Retornando resposta para navegador")
 
         canal = "55PABX"
         conversacao = json.dumps("audio")
 
 
+        etapa = 'conectar_mysql'
+        logger.info('audio_request=%s etapa=%s', request_id, etapa)
         db = conectar_db_avaliacoes()
         cursor = db.cursor()
+        etapa = 'gravar_avaliacao_mysql'
+        logger.info('audio_request=%s etapa=%s', request_id, etapa)
         cursor.execute(
             """INSERT INTO avaliacao_atendimentos (
                 identificador_unico, data, conversacao, canal, contemplado,
@@ -274,6 +286,7 @@ def captura_audio():
             ),
         )
         db.commit()
+        logger.info('audio_request=%s etapa=concluido', request_id)
 
         # Retorna o resultado
         return jsonify({
@@ -282,20 +295,12 @@ def captura_audio():
         }), 200
 
     except Exception as e:
-        print("ERRO:", repr(e))
-
-        erro = str(e)
+        logger.exception('audio_request=%s etapa=%s falha', request_id, etapa)
 
         if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
-            return jsonify({
-                "erro": "Limite do uso da IA excedido.",
-                "detalhamento": erro
-            }), 429
+            return jsonify({"erro": "Limite de uso da IA excedido. Tente mais tarde.", "codigo": request_id}), 429
 
-        return jsonify({
-            "error": "Erro ao processar o Ã¡udio.",
-            "detalhamento": erro
-        }), 500
+        return jsonify({"erro": "Falha ao processar o áudio. Informe este código ao suporte.", "codigo": request_id}), 500
 
     finally:
         if cursor is not None:

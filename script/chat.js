@@ -79,8 +79,6 @@ form.addEventListener("submit", async (event) => {
     const dataAvaliacao = document.getElementById("data").value.trim();
     const numerocliente = document.getElementById("numerocliente").value.trim();
     
-    console.log(contemplado, cliente, dataAvaliacao, numerocliente);
-
     // Mantem a leitura do numero numerica; o input HTML tambem usa type="number".
     Number(numerocliente);
 
@@ -103,8 +101,6 @@ form.addEventListener("submit", async (event) => {
     formData.append("contemplado", contemplado);
     formData.append("data", dataAvaliacao);
     formData.append("numero", numerocliente);
-    console.log(formData);
-    
     enviar.innerHTML = '<span class="loading-spinner" aria-hidden="true"></span>';
     enviar.setAttribute("aria-label", "Analisando áudio");
     alertBox.classList.add("d-none");
@@ -121,7 +117,10 @@ form.addEventListener("submit", async (event) => {
 
         // Erros HTTP exibem o status e interrompem o fluxo de renderizacao de sucesso.
         if (!response.ok) {
-            alertBox.textContent = `Erro no envio! Status: ${response.status}`;
+            const erro = await response.json().catch(() => ({}));
+            const mensagem = erro.erro || erro.error || `Erro no envio! Status: ${response.status}`;
+            const codigo = erro.codigo ? ` Código para consultar os logs: ${erro.codigo}` : "";
+            alertBox.textContent = `${mensagem}${codigo}`;
             alertBox.classList.remove("d-none");
             return;
         }

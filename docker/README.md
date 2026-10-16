@@ -1,5 +1,7 @@
 # Implantação no Easypanel
 
+Para aprender os conceitos de Docker e Compose usados neste projeto, consulte o [Tutorial de Docker e Docker Compose](TUTORIAL.md). Este arquivo continua como o passo a passo de implantação no Easypanel.
+
 Este guia explica como publicar o Monitor.IA no Easypanel usando o Docker Compose deste repositório.
 
 ## Como a implantação é organizada
