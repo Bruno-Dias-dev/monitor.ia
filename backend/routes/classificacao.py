@@ -1,10 +1,10 @@
 import os 
 import mysql.connector
 from flask import jsonify, Blueprint
-from login import conectar_db
+from routes.login import conectar_db
 from pathlib import Path
 from dotenv import load_dotenv
-from registro import conectar_db_avaliacoes
+from routes.registro import conectar_db_avaliacoes
 from datetime import date, timedelta
 
 
@@ -18,6 +18,9 @@ def classificacao():
     hoje = date.today()
     inicio_semana = hoje - timedelta(days=hoje.weekday())
     fim_semana = inicio_semana + timedelta(days=7)
+
+    inicioTeste = '2026-01-01'
+    fimTeste = '2027-01-01'
 
     try:
         conexao = conectar_db_avaliacoes()
@@ -36,7 +39,7 @@ def classificacao():
                 AND criado_em < %s
                 AND contemplado IS NOT NULL
             GROUP BY contemplado;
-        """, (inicio_semana, fim_semana))
+        """, (inicioTeste, fimTeste))
 
         registros = cursor.fetchall()
 

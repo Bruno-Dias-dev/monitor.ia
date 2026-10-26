@@ -96,7 +96,7 @@ document
         try {
 
             const resposta = await fetch(
-                `/api/avaliacoes?data_inicial=${encodeURIComponent(inicial)}&data_final=${encodeURIComponent(final)}`,
+                `http://127.0.0.1:5001/api/avaliacoes?data_inicial=${encodeURIComponent(inicial)}&data_final=${encodeURIComponent(final)}`,
             {
                 method: "GET",
                 headers: {

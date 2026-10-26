@@ -6,11 +6,11 @@ async function carregarAnalises(){
         return
     }
 
-    const response = await fetch("/avaliacoes/media", {
+    const response = await fetch("http://127.0.0.1:5001/api/classificacao", {
         method: "GET",
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
+        //headers: {
+        //    "Authorization": `Bearer ${token}`
+        //}
     });
 
     console.log(response)
@@ -23,15 +23,24 @@ async function carregarAnalises(){
 
     const dados = await response.json();
 
-    console.log(dados);
+    const ranking = [...dados.registro].sort(
+    (a, b) => Number(b.media_clareza) - Number(a.media_clareza)
+    );
+
+    console.log(ranking);
+
+    const registro = Object.fromEntries(
+    dados.registro.map(item => [item.contemplado, item])
+    );
+     console.log(dados); 
 
     // Bárbara Aparecyda Captura
-    const BMediaClareza = dados["Barbara Aparecyda"].media_clareza.toFixed(2);
-    const BmediaConhecimento = dados["Barbara Aparecyda"].media_conhecimento.toFixed(2);
-    const BmediaEmpatia = dados["Barbara Aparecyda"].media_empatia.toFixed(2);
-    const BmediaSaudacao = dados["Barbara Aparecyda"].media_saudacao.toFixed(2);
-    const BmediaResolucao = dados["Barbara Aparecyda"].media_resolucao.toFixed(2);
-    const Bnome = dados["Barbara Aparecyda"].nome;
+    const BMediaClareza = Number(registro["Barbara Aparecyda"].media_clareza).toFixed(2);
+    const BmediaConhecimento = Number(registro["Barbara Aparecyda"].media_conhecimento).toFixed(2);
+    const BmediaEmpatia = Number(registro["Barbara Aparecyda"].media_empatia).toFixed(2);
+    const BmediaSaudacao = Number(registro["Barbara Aparecyda"].media_saudacao).toFixed(2);
+    const BmediaResolucao = Number(registro["Barbara Aparecyda"].media_resolucao).toFixed(2);
+    const Bnome = registro["Barbara Aparecyda"].nome;
 
     // Tranformando em Number
     const BNMediaClareza = Number(BMediaClareza);
@@ -51,12 +60,14 @@ async function carregarAnalises(){
     const BtotalFormatado = Btotal.toFixed(1);
 
     // Jessica Freitas captura
-    const JMediaClareza = dados["Jessica Freitas"].media_clareza.toFixed(2);
-    const JmediaConhecimento = dados["Jessica Freitas"].media_conhecimento.toFixed(2);
-    const JmediaEmpatia = dados["Jessica Freitas"].media_empatia.toFixed(2);
-    const JmediaSaudacao = dados["Jessica Freitas"].media_saudacao.toFixed(2);
-    const JmediaResolucao = dados["Jessica Freitas"].media_resolucao.toFixed(2);
-    const Jnome = dados["Jessica Freitas"].nome;
+    const JMediaClareza = Number(registro["Jessica Freitas"].media_clareza).toFixed(2);
+    const JmediaConhecimento = Number(registro["Jessica Freitas"].media_conhecimento).toFixed(2);
+    const JmediaEmpatia = Number(registro["Jessica Freitas"].media_empatia).toFixed(2);
+    const JmediaSaudacao = Number(registro["Jessica Freitas"].media_saudacao).toFixed(2);
+    const JmediaResolucao = Number(registro["Jessica Freitas"].media_resolucao).toFixed(2);
+    const Jnome = registro["Jessica Freitas"].contemplado;
+
+    console.log(JMediaClareza)
 
     //Transformando em Number Jessica
     const JNMediaClareza = Number(JMediaClareza);
@@ -74,11 +85,11 @@ async function carregarAnalises(){
     ) / 5;
 
     // Valdeilson Captura da rotas
-    const VMediaClareza = dados["Valdeilson Neves"].media_clareza.toFixed(2);
-    const VmediaConhecimento = dados["Valdeilson Neves"].media_conhecimento.toFixed(2);
-    const VmediaEmpatia = dados["Valdeilson Neves"].media_empatia.toFixed(2);
-    const VmediaSaudacao = dados["Valdeilson Neves"].media_saudacao.toFixed(2);
-    const VmediaResolucao = dados["Valdeilson Neves"].media_resolucao.toFixed(2);
+    const VMediaClareza = Number(registro["Valdeilson Neves"].media_clareza).toFixed(2);
+    const VmediaConhecimento = Number(registro["Valdeilson Neves"].media_conhecimento).toFixed(2);
+    const VmediaEmpatia = Number(registro["Valdeilson Neves"].media_empatia).toFixed(2);
+    const VmediaSaudacao = Number(registro["Valdeilson Neves"].media_saudacao).toFixed(2);
+    const VmediaResolucao = Number(registro["Valdeilson Neves"].media_resolucao).toFixed(2);
 
     // Tranformando em Number
     const VNMediaClareza = Number(VMediaClareza);
@@ -96,6 +107,8 @@ async function carregarAnalises(){
         VNmediaResolucao
     ) / 5;
 
+    NVtotal = Vtotal.toFixed(2);
+
     // Barbara pegando elemento e colocolando la ele kkkk
     document.getElementById("mediaClareza").innerText = BMediaClareza;
     document.getElementById("mediaSaudacao").innerText = BmediaSaudacao;
@@ -111,7 +124,7 @@ async function carregarAnalises(){
     document.getElementById("mediaConhecimento2").innerText =  VmediaConhecimento;
     document.getElementById("media_empatia2").innerText = VmediaEmpatia;
     document.getElementById("mediaResolucao2").innerText = VmediaResolucao;
-    document.getElementById("totalValdeilson").innerText = Vtotal;
+    document.getElementById("totalValdeilson").innerText = NVtotal;
 
 
     // Jessica pegando elemento e colocolando la ele kkkk
@@ -157,7 +170,7 @@ async function carregarAnalises(){
 
     document.getElementById("barraEmpatia2").style.width = `${VmediaEmpatia * 10}%`;
 
-    document.getElementById("barraTotal2").style.width = `${Vtotal * 10}%`
+    document.getElementById("barraTotal2").style.width = `${NVtotal * 10}%`
 
     // Jessica Barra
 
@@ -210,7 +223,6 @@ async function carregarAnalises(){
 
 
     };
-
 
 
 carregarAnalises();

@@ -13,6 +13,7 @@ from routes.ia import ia_bp
 from routes.avaliacoes import avaliacoes_bp
 from routes.panda import panda_bp
 from routes.registro import registro_bp
+from routes.classificacao import classificacao_bp
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR.parent / ".env")
@@ -34,6 +35,7 @@ def create_app():
     app.register_blueprint(avaliacoes_bp)
     app.register_blueprint(panda_bp)
     app.register_blueprint(registro_bp)
+    app.register_blueprint(classificacao_bp)
 
     origins = [
         origin.strip()
