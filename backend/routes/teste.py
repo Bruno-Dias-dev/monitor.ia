@@ -1,5 +1,8 @@
-from random import randint
+from datetime import date, timedelta
 
-numero_0a10000 = randint(0, 10000)
+hoje = date.today()
 
-print(numero_0a10000)
+inicio_semana = hoje - timedelta(days=hoje.weekday())
+fim_semana = inicio_semana + timedelta(days=7)
+
+print(inicio_semana, fim_semana)
