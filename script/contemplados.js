@@ -220,7 +220,7 @@ async function carregarAnalises(){
         }
     });
 
-
+    document
 
     };
 

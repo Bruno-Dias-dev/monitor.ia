@@ -10,6 +10,20 @@ const audioCaixa = document.getElementById("caixaAudio");
 const nomeArquivoResposta = document.getElementById("nomeArquivoResposta");
 const novaAnalise = document.getElementById("novaAnalise");
 
+function verificarAutenticacao() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    return true
+
+}
+
+verificarAutenticacao();
+
 // Mapeia as chaves JSON da IA para os rotulos apresentados na interface.
 // Se o backend alterar o nome de uma chave, atualize o mapeamento aqui.
 const camposResultado = [
@@ -72,7 +86,6 @@ function mostrarResultado(resultado) {
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
     console.log("SUBMIT INTERCEPTADO ✅"); // <- isso aparece?
-    const token = localStorage.getItem("token");
 
     const contemplado = document.getElementById("contemplado").value.trim();
     const cliente = document.getElementById("cliente").value.trim();
