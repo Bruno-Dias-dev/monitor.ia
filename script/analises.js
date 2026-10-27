@@ -3,13 +3,13 @@ function verificarAutenticacao() {
 
     if (!token) {
         window.location.href = "login.html";
-        return
+        return;
     }
 
     return true
 }
 
-
+verificarAutenticacao();
 
 const camposDetalhe = [
     ["id", "ID"],
