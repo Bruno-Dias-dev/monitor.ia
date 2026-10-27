@@ -8,9 +8,9 @@ async function carregarAnalises(){
 
     const response = await fetch("http://127.0.0.1:5001/api/classificacao", {
         method: "GET",
-        //headers: {
-        //    "Authorization": `Bearer ${token}`
-        //}
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
     });
 
     console.log(response)
@@ -33,6 +33,8 @@ async function carregarAnalises(){
     dados.registro.map(item => [item.contemplado, item])
     );
      console.log(dados); 
+
+    
 
     // Bárbara Aparecyda Captura
     const BMediaClareza = Number(registro["Barbara Aparecyda"].media_clareza).toFixed(2);
@@ -107,7 +109,7 @@ async function carregarAnalises(){
         VNmediaResolucao
     ) / 5;
 
-    NVtotal = Vtotal.toFixed(2);
+    const NVtotal = Vtotal.toFixed(2);
 
     // Barbara pegando elemento e colocolando la ele kkkk
     document.getElementById("mediaClareza").innerText = BMediaClareza;
@@ -220,7 +222,48 @@ async function carregarAnalises(){
         }
     });
 
-    document
+    const listaMedias = [
+        {
+            nome: "Barbara Aparecyda",
+            media_total: Btotal
+        },
+        {
+            nome: "Jessica Freitas",
+            media_total: Jtotal
+        },
+        {
+            nome: "Valdeilson Neves",
+            media_total: NVtotal
+        }
+
+    ];
+    
+    console.log("dados recebidos:", dados);
+    console.log("nomes:", dados.registro.map(item => item.contemplado));
+
+    listaMedias.sort((a, b) => b.media_total - a.media_total);
+
+    console.log(listaMedias);
+
+    // Ranking 
+    const nome1 = document.getElementById("nomePrimeiro");
+    nome1.innerText = listaMedias[0].nome;
+
+    const pontuacao1 = document.getElementById("pontuacao1");
+    pontuacao1.innerText = listaMedias[0].media_total;
+
+    const nome2 = document.getElementById("nomeSegundo");
+    nome2.innerText = listaMedias[1].nome;
+
+    const pontuacao2 = document.getElementById("pontuacao2");
+    pontuacao2.innerText = listaMedias[1].media_total;
+
+    const nome3 = document.getElementById("nomeTerceiro");
+    nome3.innerText = listaMedias[2].nome;
+
+    const pontuacao3 = document.getElementById("pontuacao3");
+    pontuacao3.innerText = listaMedias[2].media_total;
+
 
     };
 
