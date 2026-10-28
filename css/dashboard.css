@@ -109,6 +109,12 @@
       gap: 25px;
     }
 
+    .metrics-grid2 {
+      display: grid;
+      gap: 25px;
+    }
+
+
     .metric-box {
       background: #fafafa;
       padding: 20px;
