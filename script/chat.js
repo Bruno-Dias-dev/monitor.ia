@@ -11,7 +11,7 @@ const nomeArquivoResposta = document.getElementById("nomeArquivoResposta");
 const novaAnalise = document.getElementById("novaAnalise");
 
 function verificarAutenticacao() {
-    const token = localStorage.getItem("token");
+    let token = localStorage.getItem("token");
 
     if (!token) {
         window.location.href = "login.html";
@@ -57,6 +57,7 @@ arquivo.addEventListener("change", () => {
 function mostrarResultado(resultado) {
     const container = document.getElementById("textoResposta");
     container.replaceChildren();
+
         
     camposResultado.forEach(([chave, titulo]) => {
         if (resultado[chave] === undefined || resultado[chave] === null || resultado[chave] === "") {
@@ -87,6 +88,7 @@ form.addEventListener("submit", async (event) => {
     event.preventDefault();
     console.log("SUBMIT INTERCEPTADO ✅"); // <- isso aparece?
 
+    let token = localStorage.getItem("token");
     const contemplado = document.getElementById("contemplado").value.trim();
     const cliente = document.getElementById("cliente").value.trim();
     const dataAvaliacao = document.getElementById("data").value.trim();

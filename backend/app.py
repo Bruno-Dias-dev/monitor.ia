@@ -6,6 +6,12 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+
+BASE_DIR = Path(__file__).resolve().parent
+# No desenvolvimento local, use o .env da raiz antes de importar qualquer rota.
+# override=True evita que valores antigos herdados do terminal prevaleçam.
+load_dotenv(BASE_DIR.parent / ".env", override=True)
+
 from routes.login import login_bp
 from routes.dadosomni import dashboard_bp
 from routes.busca import busca_bp
@@ -14,10 +20,6 @@ from routes.avaliacoes import avaliacoes_bp
 from routes.panda import panda_bp
 from routes.registro import registro_bp
 from routes.classificacao import classificacao_bp
-
-BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(BASE_DIR.parent / ".env")
-load_dotenv(BASE_DIR / ".env", override=True)
 
 
 def create_app():

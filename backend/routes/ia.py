@@ -238,7 +238,7 @@ def captura_audio():
         etapa = 'gerar_avaliacao_gemini'
         logger.info('audio_request=%s etapa=%s', request_id, etapa)
         response = client.models.generate_content(
-            model="gemini-3.8-flash",
+            model="gemini-3.1-flash-lite",
             contents=[audio, system_prompt],
             config={"response_mime_type": "application/json"},
         )
