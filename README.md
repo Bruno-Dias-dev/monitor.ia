@@ -1,4 +1,4 @@
-# Implantação no Easypanel
+﻿# Implantação no Easypanel
 
 Este guia explica como publicar o Monitor.IA no Easypanel usando o Docker Compose deste repositório.
 
@@ -38,7 +38,7 @@ Envie ao Git os arquivos de aplicação, incluindo `docker/`, `backend/`, `auth/
    - **Docker Compose File:** `docker/docker-compose.yml`.
 6. Salve e abra a seção **Environment** do serviço.
 
-O Compose usa caminhos relativos à raiz do repositório: o Dockerfile está em `docker/Dockerfile`, as configurações do Nginx em `docker/nginx/site.conf` e os arquivos estáticos nas pastas `auth/`, `css/`, `script/` e `assets/`. Portanto, mantenha o Build Path como `/`.
+O Compose principal construi as imagens com contexto na raiz do repositorio. Os Dockerfiles copiam a configuracao Nginx e os arquivos estaticos para as imagens; use Build Path `/` se o Easypanel fizer o build a partir do Git.
 
 ## 3. Configure as variáveis de ambiente
 
@@ -99,7 +99,7 @@ O domínio deve apontar para `web`, pois é o Nginx que serve o frontend e receb
 
 | Sintoma | Verificações recomendadas |
 |---|---|
-| Falha durante o build | Confirme o Build Path `/`, o arquivo `docker/docker-compose.yml`, a existência de `backend/requirements.txt`, `docker/Dockerfile` e dos diretórios referenciados nos volumes. Consulte os logs do Deploy. |
+Confira Build Path `/`, arquivo Compose e os Dockerfiles referenciados.
 | Container `backend` reinicia | Verifique variáveis ausentes ou inválidas, especialmente `JWT_SECRET_KEY` e as configurações de banco necessárias. Consulte os logs do backend. |
 | Erro de conexão MySQL | Confira host, porta, credenciais, nome do banco, permissões (`GRANT`), firewall e lista de IPs autorizados pelo provedor. |
 | Domínio não abre | Verifique o DNS, o domínio cadastrado no Easypanel, o destino `web:80` e o estado do container `web`. |
