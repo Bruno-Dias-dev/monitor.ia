@@ -1,6 +1,5 @@
 services:
   backend:
-    image: ${DOCKERHUB_USERNAME:-local}/monitor-ia-backend:${IMAGE_TAG:-latest}
     build:
       context: ..
       dockerfile: docker/Dockerfile
@@ -9,10 +8,7 @@ services:
       - ../.env
 
   web:
-    image: ${DOCKERHUB_USERNAME:-local}/monitor-ia-web:${IMAGE_TAG:-latest}
-    build:
-      context: ..
-      dockerfile: docker/web.Dockerfile
+    image: nginx:1.27-alpine
     restart: unless-stopped
     depends_on:
       - backend

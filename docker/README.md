@@ -1,4 +1,4 @@
-﻿# Implantação no Easypanel
+# Implantação no Easypanel
 
 Para aprender os conceitos de Docker e Compose usados neste projeto, consulte o [Tutorial de Docker e Docker Compose](TUTORIAL.md). Este arquivo continua como o passo a passo de implantação no Easypanel.
 
@@ -40,7 +40,7 @@ Envie ao Git os arquivos de aplicação, incluindo `docker/`, `backend/`, `auth/
    - **Docker Compose File:** `docker/docker-compose.yml`.
 6. Salve e abra a seção **Environment** do serviço.
 
-O Compose principal constrói as imagens com contexto na raiz do repositório. Os Dockerfiles copiam a configuração Nginx e os arquivos estáticos para as imagens; use Build Path `/` se o Easypanel fizer o build a partir do Git.
+O Compose constrói localmente apenas a imagem do backend, usando `docker/Dockerfile`. O serviço `web` usa a imagem pública `nginx:1.27-alpine` e monta a configuração do Nginx e os arquivos estáticos diretamente do repositório. Use Build Path `/` para que os caminhos relativos do Compose encontrem esses arquivos.
 
 ## 3. Configure as variáveis de ambiente
 
@@ -101,7 +101,7 @@ O domínio deve apontar para `web`, pois é o Nginx que serve o frontend e receb
 
 | Sintoma | O que verificar |
 | --- | --- |
-Confira Build Path `/`, arquivo Compose e os Dockerfiles referenciados.
+| Falha durante o build | Confira Build Path `/`, arquivo Compose, `backend/requirements.txt` e `docker/Dockerfile`. O serviço `web` baixa a imagem `nginx:1.27-alpine` e monta os arquivos do repositório. |
 | Container `backend` reinicia | Variáveis obrigatórias ausentes ou inválidas, especialmente `JWT_SECRET_KEY` e variáveis de conexão usadas pela rota inicializada. Consulte os logs do backend. |
 | Erro de conexão MySQL | Host e porta, usuário/senha, nome do banco, grants, firewall e allowlist do provedor do banco para o servidor Easypanel. |
 | Domínio não abre | DNS apontando ao servidor, domínio adicionado no serviço Compose e destino `web:80`. Confirme que o container `web` está em execução. |
@@ -121,21 +121,3 @@ docker compose -f docker/docker-compose.yml up -d --build
 ```
 
 O Compose não publica uma porta no host; para acesso externo nesse modo, configure seu próprio proxy reverso para encaminhar HTTP à porta `80` do container `web`. No Easypanel, use a configuração de domínio descrita acima.
-
-## Publicar e executar imagens pelo Docker Hub
-
-O reposit?rio agora define imagens independentes para `backend` e `web`. O Dockerfile do backend instala e executa a API; `web.Dockerfile` empacota Nginx, configura??o e arquivos est?ticos. O Compose principal constr?i as duas imagens e aplica os nomes `USUARIO/monitor-ia-backend:TAG` e `USUARIO/monitor-ia-web:TAG`.
-
-1. Crie no Docker Hub os repositorios `monitor-ia-backend` e `monitor-ia-web` (ou defina `BACKEND_IMAGE` e `WEB_IMAGE` se escolher outros nomes).
-2. No computador de publica??o, preencha `DOCKERHUB_USERNAME` e `IMAGE_TAG` no `.env` da raiz. Use uma tag de versao, por exemplo `1.0.0`, para identificar cada publica??o.
-3. Autentique o Docker CLI com `docker login` e use um token do Docker Hub com permiss?o de escrita quando solicitado.
-4. Na raiz do repositorio, construa e publique:
-
-```sh
-docker compose -f docker/docker-compose.yml build
-docker compose -f docker/docker-compose.yml push
-```
-
-No servidor, configure o `.env` com `DOCKERHUB_USERNAME`, `IMAGE_TAG` e as vari?veis da aplicacao. Para repositorios privados, configure tamb?m `docker login` no servidor/Easypanel. Use `docker/docker-compose.hub.yml` como arquivo Compose: ele somente baixa as imagens publicadas e n?o depende do c?digo-fonte nem dos Dockerfiles no servidor. Configure o dom?nio para `web:80`, como no fluxo acima.
-
-Mantenha `.env` fora do Git e nunca inclua credenciais de aplicacao nos argumentos de build ou nas imagens. Ap?s atualizar o codigo, publique uma nova tag e atualize `IMAGE_TAG` no servidor para implantar essa versao.
