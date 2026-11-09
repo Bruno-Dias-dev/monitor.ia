@@ -19,6 +19,11 @@ def classificacao():
     inicio_semana = hoje - timedelta(days=hoje.weekday())
     fim_semana = inicio_semana + timedelta(days=7)
 
+    print(inicio_semana, fim_semana)
+
+    teste = "2026-11-02"
+    print(teste)
+
     try:
         conexao = conectar_db_avaliacoes()
 
@@ -36,7 +41,7 @@ def classificacao():
                 AND criado_em < %s
                 AND contemplado IS NOT NULL
             GROUP BY contemplado;
-        """, (inicio_semana, fim_semana))
+        """, (teste, fim_semana))
 
         registros = cursor.fetchall()
 
