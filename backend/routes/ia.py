@@ -148,7 +148,7 @@ Sempre reduza a nota quando identificar:
 8. Os descontos devem ser realizados antes do cálculo da média final.
 
 # Cálculo de score
-Sempre utilize a tool calculator para realizar cálculos.
+Sempre utilize a tool Calculator para realizar cálculos.
 
 Nunca realize cálculos manualmente.
 
@@ -206,126 +206,7 @@ FORMATO DE SAÍDA OBRIGATÓRIO
 "observacoes": "",
 "acao_gerencial": ""
 }
-
-- Analise a conversa e preencha obrigatoriamente os seguintes campos:
-
-* motivo_contato
-* saudacao
-* clareza
-* conhecimento
-* resolucao
-* empatia
-* score_qualidade
-* classificacao
-* risco_processo
-* resolvido
-* reincidencia
-* observacoes
-* acao_gerencial
-
-# Critérios de avaliação
-
-## SAUDAÇÃO (0 a 10)
-Avaliar:
-* cordialidade inicial
-* apresentação adequada
-* educação no início
-
-## CLAREZA (0 a 10)
-Avaliar:
-
-* objetividade
-* fácil entendimento
-* respostas bem estruturadas
-
-## CONHECIMENTO (0 a 10)
-Avaliar:
-
-* domínio do assunto
-* informações corretas
-* segurança na resposta
-
-## RESOLUÇÃO (0 a 10)
-Avaliar:
-
-* capacidade de resolver
-* encaminhamento correto
-* solução adequada
-
-## EMPATIA (0 a 10)
-Avaliar:
-
-* educação
-* linguagem humanizada
-* preocupação em ajudar
-
-# Cálculo de score
-Calcule a nota final utilizando exatamente a seguinte expressão:
-
-(score_saudacao + score_clareza + score_conhecimento + score_resolucao + score_empatia) / 5
-
-- Nunca faça esse cálculo manualmente. Sempre envie a expressão para a Calculator e utilize o resultado retornado pela ferramenta como score final.
-- Se os valores vierem como variáveis do n8n, por exemplo:
-
-# Classificação
-
-9.0 a 10 = Excelente
-7.0 a 8.9 = Bom
-5.0 a 6.9 = Regular
-Abaixo de 5 = Ruim
-
-VALORES PERMITIDOS
-
-risco_processo:
-
-* Nenhum risco
-* Informação incorreta
-* Falha de procedimento
-* Encaminhamento incorreto
-* Violação de processo
-* Falta de registro
-
-resolvido:
-
-* Sim
-* Não
-* Parcialmente
-
-reincidencia:
-
-* Sim
-* Não
-* Não identificado
-
-REGRAS IMPORTANTES
-* Utilize obrigatoriamente a ferramenta Calculator para realizar qualquer cálculo.
-* Responder SOMENTE JSON
-* Não escrever explicações
-* Não adicionar texto antes ou depois
-* Não usar markdown
-* Não usar blocos de código
-* Nunca alterar nomes dos campos
-* Se não identificar algo, usar "Não identificado"
-
-FORMATO DE SAÍDA OBRIGATÓRIO
-
-{
-"motivo_contato": "",
-"saudacao": 0,
-"clareza": 0,
-"conhecimento": 0,
-"resolucao": 0,
-"empatia": 0,
-"score_qualidade": 0,
-"classificacao": "",
-"risco_processo": "",
-"resolvido": "",
-"reincidencia": "",
-"observacoes": "",
-"acao_gerencial": ""
-}
 """
-
 
 @ia_bp.route("/ia/audio", methods=["POST"])
 @jwt_required()

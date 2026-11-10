@@ -102,6 +102,10 @@ async function carregarAnalises(){
         JNmediaResolucao
     ) / 5;
 
+
+    // Bruna Quaresma captura
+    
+
     // Valdeilson Captura da rotas
     const VMediaClareza = Number(registro["Valdeilson Neves"].media_clareza).toFixed(2);
     const VmediaConhecimento = Number(registro["Valdeilson Neves"].media_conhecimento).toFixed(2);
