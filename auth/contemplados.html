@@ -60,6 +60,30 @@
             <p>Visão geral dos contemplados</p>
           </div>
 
+        <section class="section search-section">
+          <form id="filtroAvaliacoes" class="filter-form">
+            <div>
+              <label for="dataInicial">Data inicial</label>
+              <input 
+                id="dataInicial2" 
+                name="data_inicial" 
+                type="date" 
+                required>
+            </div>
+            <div>
+              <label for="dataFinal">Data final</label>
+              <input 
+                id="dataFinal2" 
+                name="data_final"
+                type="date"
+                required
+                >
+            </div>
+            <button type="submit" id="botaoPesquisar" class="btn btn-primary">Pesquisar</button>
+          </form>
+          <p id="mensagem" class="message" role="status" aria-live="polite"></p>
+        </section>
+
  <div class="section">
           <div class="metrics-grid2">
             <div class="metric-box">
@@ -82,11 +106,11 @@
                 <span id="nomeQuarto"></span>
                 <strong id="pontuacao4"></strong>
               </div>
-            <!--  
               <div class="metric-row">
                 <span id="nomeQuinto"></span>
-                <strong id="total6"></strong>
+                <strong id="pontuacao5"></strong>
               </div>
+              <!-- 
               <div class="metric-row">
                 <span></span>
                 <strong class="total" id="total7"></strong>
@@ -404,6 +428,84 @@
                 <div class="progress-title">Total</div>
                 <div class="progress-bg">
                   <div class="progress-bar" id="barraTotal4"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+
+        <div class="section">
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <h2 id="nomeC1" style="margin-bottom:20px;color:#F05A28;">
+                Bruna Quaresma
+              </h3>
+              <div class="metric-row">
+                <span>Saudação</span>
+                <strong id="mediaSaudacao5"></strong>
+              </div>
+              <div class="metric-row">
+                <span>Clareza</span>
+                <strong id="mediaClareza5"> </strong>
+              </div>
+              <div class="metric-row">
+                <span>Conhecimento</span>
+                <strong id="mediaConhecimento5"></strong>
+              </div>
+              <div class="metric-row">
+                <span>Resolução</span>
+                <strong id="mediaResolucao5"></strong>
+              </div>
+              <div class="metric-row">
+                <span>Empatia</span>
+                <strong id="mediaEmpatia5"></strong>
+              </div>
+              <div class="metric-row">
+                <span  class="fs-4 fw-bold">Total</span>
+                <strong class="total" id="totalBruna"></strong>
+              </div>
+            </div>
+
+            <div class="metric-box">
+              <div class="progress-box">
+                <div class="progress-title">Saudação</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" id="barraSaudacao5"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Clareza</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" id="barraClareza5"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Conhecimento</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" id="barraConhecimento5"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Resolução</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" id="barraResolucao5"></div>
+                </div>
+              </div>
+
+              <div class="progress-box">
+                <div class="progress-title">Empatia</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" id="barraEmpatia5"></div>
+                </div>
+              </div>
+              
+              <div class="progress-box">
+                <div class="progress-title">Total</div>
+                <div class="progress-bg">
+                  <div class="progress-bar" id="barraTotal5"></div>
                 </div>
               </div>
             </div>

@@ -68,6 +68,22 @@ async function carregarAnalises(){
     const mMediaResolucao = Number(registro["Matheus Moura De Lima"].media_resolucao).toFixed(2);
     const mMediaSaudacao = Number(registro["Matheus Moura De Lima"].media_saudacao).toFixed(2);
 
+    // Bruna captura
+    const BrunaMediaClareza = Number(registro["Bruna Quaresma"].media_clareza);
+    const BrunaMediaEmpatia = Number(registro["Bruna Quaresma"].media_empatia);
+    const BrunaMediaConhecimento = Number(registro["Bruna Quaresma"].media_conhecimento);
+    const BrunaMediaResolucao = Number(registro["Bruna Quaresma"].media_resolucao);
+    const BrunaMediaSaudacao = Number(registro["Bruna Quaresma"].media_saudacao);
+
+    const BrunaTotal = (
+        BrunaMediaClareza +
+        BrunaMediaEmpatia + 
+        BrunaMediaConhecimento + 
+        BrunaMediaResolucao + 
+        BrunaMediaSaudacao 
+    ) / 5;
+
+
     const mTotal = (
     Number(registro["Matheus Moura De Lima"].media_clareza) +
     Number(registro["Matheus Moura De Lima"].media_resolucao) +
@@ -77,7 +93,6 @@ async function carregarAnalises(){
     ) / 5;
 
     console.log(mMediaClareza, mMediaEmpatia, mMediaConhecimento, mMediaResolucao, mMediaSaudacao, mTotal);
-
 
     // Jessica Freitas captura
     const JMediaClareza = Number(registro["Jessica Freitas"].media_clareza).toFixed(2);
@@ -103,7 +118,6 @@ async function carregarAnalises(){
     ) / 5;
 
 
-    // Bruna Quaresma captura
     
 
     // Valdeilson Captura da rotas
@@ -131,7 +145,7 @@ async function carregarAnalises(){
 
     const NVtotal = Vtotal.toFixed(2);
 
-    // Barbara pegando elemento e colocolando la ele kkkk
+    // Bárbara inserindo métricas
     document.getElementById("mediaClareza").innerText = BMediaClareza;
     document.getElementById("mediaSaudacao").innerText = BmediaSaudacao;
     document.getElementById("mediaConhecimento").innerText =  BmediaConhecimento;
@@ -139,8 +153,7 @@ async function carregarAnalises(){
     document.getElementById("mediaResolucao").innerText = BmediaResolucao;
     document.getElementById("totalBarbara").innerText = BtotalFormatado;
 
-
-    // Valdeilson pegando elemento e colocolando la ele kkkk
+    // Valdeilson inserindo métricas
     document.getElementById("mediaClareza2").innerText = VMediaClareza;
     document.getElementById("mediaSaudacao2").innerText = VmediaSaudacao;
     document.getElementById("mediaConhecimento2").innerText =  VmediaConhecimento;
@@ -148,16 +161,15 @@ async function carregarAnalises(){
     document.getElementById("mediaResolucao2").innerText = VmediaResolucao;
     document.getElementById("totalValdeilson").innerText = NVtotal;
 
-
-    // Jessica pegando elemento e colocolando la ele kkkk
+    // Jessica inserindo métricas
     document.getElementById("mediaClareza3").innerText = JMediaClareza;
     document.getElementById("mediaSaudacao3").innerText = JmediaSaudacao;
     document.getElementById("mediaConhecimento3").innerText =  JmediaConhecimento;
     document.getElementById("media_empatia3").innerText = JmediaEmpatia;
     document.getElementById("mediaResolucao3").innerText = JmediaResolucao;
-    document.getElementById("totalJessica").innerText = Jtotal;
+    document.getElementById("totalJessica").innerText = Jtotal.toFixed(2);
 
-    // Matheus elemento e colocolando la ele kkkk
+    // Matheus inserindo métricas
     document.getElementById("mediaClareza4").innerText = mMediaClareza;
     document.getElementById("mediaSaudacao4").innerText = mMediaSaudacao;
     document.getElementById("mediaConhecimento4").innerText = mMediaConhecimento;
@@ -165,6 +177,17 @@ async function carregarAnalises(){
     document.getElementById("mediaResolucao4").innerText = mMediaResolucao;
     document.getElementById("mediaEmpatia4").innerText = mMediaEmpatia;
     document.getElementById("totalMatheus").innerText = mTotal;
+
+    // Bruna Quaresma inserindo métricas
+    document.getElementById("mediaClareza5").innerText  = BrunaMediaClareza;
+    document.getElementById("mediaSaudacao5").innerText = BrunaMediaSaudacao;
+    document.getElementById("mediaConhecimento5").innerText = BrunaMediaConhecimento;
+    document.getElementById("mediaEmpatia5").innerText = BrunaMediaResolucao;
+    document.getElementById("mediaResolucao5").innerText = BrunaMediaResolucao;
+    document.getElementById("totalBruna").innerText = BrunaTotal.toFixed(2);
+
+    
+
 
     const ctx = document.getElementById("graficoQualidade");
 
@@ -225,6 +248,16 @@ async function carregarAnalises(){
     document.getElementById("barraEmpatia4").style.width = `${mMediaEmpatia * 10}%`;
     document.getElementById("barraTotal4").style.width = `${mTotal * 10}%`;
 
+    // Bruna Barra 
+    document.getElementById("barraClareza5").style.width = `${BrunaMediaClareza * 10}%`;
+    document.getElementById("barraSaudacao5").style.width = `${BrunaMediaSaudacao * 10}%`;
+    document.getElementById("barraClareza5").style.width = `${BrunaMediaClareza * 10}%`;
+    document.getElementById("barraConhecimento5").style.width = `${BrunaMediaConhecimento * 10}%`;
+    document.getElementById("barraResolucao5").style.width = `${BrunaMediaResolucao * 10}%`;
+    document.getElementById("barraEmpatia5").style.width = `${BrunaMediaEmpatia * 10}%`;
+    document.getElementById("barraTotal5").style.width = `${BrunaTotal * 10}%`;
+
+
 
     new Chart(ctx, {
         type: "bar",
@@ -276,6 +309,10 @@ async function carregarAnalises(){
         {
             nome: "Matheus Moura De Lima",
             media_total: mTotal
+        },
+        {
+            nome: "Bruna Quaresma",
+            media_total: BrunaTotal
         }
 
     ];
@@ -291,22 +328,28 @@ async function carregarAnalises(){
     const nome1 = document.getElementById("nomePrimeiro");
     nome1.innerText = listaMedias[0].nome;
     const pontuacao1 = document.getElementById("pontuacao1");
-    pontuacao1.innerText = listaMedias[0].media_total;
+    pontuacao1.innerText = Number(listaMedias[0].media_total).toFixed(2);
 
     const nome2 = document.getElementById("nomeSegundo");
     nome2.innerText = listaMedias[1].nome;
     const pontuacao2 = document.getElementById("pontuacao2");
-    pontuacao2.innerText = listaMedias[1].media_total;
+    pontuacao2.innerText = Number(listaMedias[1].media_total).toFixed(2);
 
     const nome3 = document.getElementById("nomeTerceiro");
     nome3.innerText = listaMedias[2].nome;
     const pontuacao3 = document.getElementById("pontuacao3");
-    pontuacao3.innerText = listaMedias[2].media_total;
+    pontuacao3.innerText = Number(listaMedias[2].media_total).toFixed(2);
 
     const nome4 = document.getElementById("nomeQuarto");
     nome4.innerText = listaMedias[3].nome;
     const pontuacao4 = document.getElementById("pontuacao4")
-    pontuacao4.innerText = listaMedias[3].media_total;
+    pontuacao4.innerText = Number(listaMedias[3].media_total).toFixed(2);
+
+    const nome5 = document.getElementById("nomeQuinto");
+    nome5.innerText = listaMedias[4].nome;
+    const pontuacao5 = document.getElementById("pontuacao5");
+    pontuacao5.innerText = Number(listaMedias[4].media_total).toFixed(2);
+
     
 
 
