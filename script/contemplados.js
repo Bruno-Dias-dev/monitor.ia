@@ -368,6 +368,13 @@ async function carregarAnalises(){
     pontuacao6.innerText = Number(listaMedias[5].media_total).toFixed(2);
 
     };
-
-
+  
 carregarAnalises();
+
+const botao = document.getElementById("botaoPesquisar2");
+
+botao.addEventListener("click", function(e) {
+    e.preventDefault();
+    alert("Você é um betinha");
+});
+
