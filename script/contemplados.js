@@ -32,10 +32,24 @@ async function carregarAnalises(){
     const registro = Object.fromEntries(
     dados.registro.map(item => [item.contemplado, item])
     );
-     console.log(dados); 
+     console.log(dados);
+     
+    // Capturando campos do Roberto
+    const RMediaClareza = Number(registro["Roberto Santos"].media_clareza);
+    const RMediaConhecimento = Number(registro["Roberto Santos"].media_conhecimento);
+    const RMediaEmpatia = Number(registro["Roberto Santos"].media_empatia);
+    const RSaudacao = Number(registro["Roberto Santos"].media_saudacao);
+    const RResolucao = Number(registro["Roberto Santos"].media_resolucao);
 
-    
-
+    // Calculando média das notas do Roberto
+    const Rtotal = (
+        RMediaClareza + 
+        RMediaConhecimento +
+        RMediaEmpatia +
+        RSaudacao + 
+        RResolucao
+    ) / 5;
+     
     // Bárbara Aparecyda Captura
     const BMediaClareza = Number(registro["Barbara Aparecyda"].media_clareza).toFixed(2);
     const BmediaConhecimento = Number(registro["Barbara Aparecyda"].media_conhecimento).toFixed(2);
@@ -51,6 +65,7 @@ async function carregarAnalises(){
     const BNmediaSaudacao = Number(BmediaSaudacao);
     const BNmediaResolucao = Number(BmediaResolucao);
 
+    // Calculando média das notas da Bruna
     const Btotal = (
         BNMediaClareza +
         BNmediaConhecimento + 
@@ -82,7 +97,6 @@ async function carregarAnalises(){
         BrunaMediaResolucao + 
         BrunaMediaSaudacao 
     ) / 5;
-
 
     const mTotal = (
     Number(registro["Matheus Moura De Lima"].media_clareza) +
@@ -117,9 +131,6 @@ async function carregarAnalises(){
         JNmediaResolucao
     ) / 5;
 
-
-    
-
     // Valdeilson Captura da rotas
     const VMediaClareza = Number(registro["Valdeilson Neves"].media_clareza).toFixed(2);
     const VmediaConhecimento = Number(registro["Valdeilson Neves"].media_conhecimento).toFixed(2);
@@ -144,6 +155,14 @@ async function carregarAnalises(){
     ) / 5;
 
     const NVtotal = Vtotal.toFixed(2);
+
+    // Roberto inserindo métricas
+    document.getElementById("mediaClareza6").innerText = RMediaClareza.toFixed(2);
+    document.getElementById("mediaSaudacao6").innerText = RSaudacao.toFixed(2);
+    document.getElementById("mediaConhecimento6").innerText = RMediaConhecimento.toFixed(2);
+    document.getElementById("mediaEmpatia6").innerText = RMediaEmpatia.toFixed(2);
+    document.getElementById("mediaResolucao6").innerText = RResolucao.toFixed(2);
+    document.getElementById("totalRoberto").innerText = Rtotal.toFixed(2);
 
     // Bárbara inserindo métricas
     document.getElementById("mediaClareza").innerText = BMediaClareza;
@@ -185,10 +204,7 @@ async function carregarAnalises(){
     document.getElementById("mediaEmpatia5").innerText = BrunaMediaResolucao;
     document.getElementById("mediaResolucao5").innerText = BrunaMediaResolucao;
     document.getElementById("totalBruna").innerText = BrunaTotal.toFixed(2);
-
     
-
-
     const ctx = document.getElementById("graficoQualidade");
 
     const saudacao = BmediaSaudacao;
@@ -196,48 +212,40 @@ async function carregarAnalises(){
     const conhecimento = BmediaConhecimento;
     const resolucao = BmediaResolucao;
     const empatia = BmediaEmpatia;
+
+    // Roberto 
+    document.getElementById("barraClareza6").style.width = `${RMediaClareza * 10}%`;
+    document.getElementById("barraSaudacao6").style.width = `${RSaudacao * 10}%`;
+    document.getElementById("barraClareza6").style.width = `${RMediaClareza * 10}%`;
+    document.getElementById("barraConhecimento6").style.width = `${RMediaConhecimento * 10}%`;
+    document.getElementById("barraResolucao6").style.width = `${RResolucao * 10}%`;
+    document.getElementById("barraEmpatia6").style.width = `${RMediaEmpatia * 10}%`;
+    document.getElementById("barraTotal6").style.width = `${Rtotal * 10}%`;
+
     
     // Barbara barra
-
     document.getElementById("barraSaudacao").style.width = `${saudacao * 10}%`;
-
     document.getElementById("barraClareza").style.width = `${clareza * 10}%`;
-
     document.getElementById("barraConhecimento").style.width = `${conhecimento * 10}%`;
-
     document.getElementById("barraResolucao").style.width = `${resolucao * 10}%`;
-
     document.getElementById("barraEmpatia").style.width = `${empatia * 10}%`;
-
     document.getElementById("barraTotal").style.width = `${Btotal * 10}%`;
 
     // Valdeilson Barra
-
     document.getElementById("barraSaudacao2").style.width = `${VmediaSaudacao * 10}%`;
-
     document.getElementById("barraClareza2").style.width = `${VMediaClareza * 10}%`;
-
     document.getElementById("barraConhecimento2").style.width = `${VmediaConhecimento * 10}%`;
-
     document.getElementById("barraResolucao2").style.width = `${VmediaResolucao * 10}%`;
-
     document.getElementById("barraEmpatia2").style.width = `${VmediaEmpatia * 10}%`;
-
-    document.getElementById("barraTotal2").style.width = `${NVtotal * 10}%`
+    document.getElementById("barraTotal2").style.width = `${NVtotal * 10}%`;
 
     // Jessica Barra
-
     document.getElementById("barraSaudacao3").style.width = `${JmediaSaudacao * 10}%`;
-
     document.getElementById("barraClareza3").style.width = `${JMediaClareza * 10}%`;
-
     document.getElementById("barraConhecimento3").style.width = `${JmediaConhecimento * 10}%`;
-
     document.getElementById("barraResolucao3").style.width = `${JmediaResolucao * 10}%`;
-
     document.getElementById("barraEmpatia3").style.width = `${JmediaEmpatia * 10}%`;
-
-    document.getElementById("barraTotal3").style.width = `${Jtotal * 10}%`
+    document.getElementById("barraTotal3").style.width = `${Jtotal * 10}%`;
 
 
     // Matheus Barra 
@@ -313,6 +321,10 @@ async function carregarAnalises(){
         {
             nome: "Bruna Quaresma",
             media_total: BrunaTotal
+        },
+        {
+            nome: "Roberto Santos",
+            media_total: Rtotal
         }
 
     ];
@@ -350,8 +362,10 @@ async function carregarAnalises(){
     const pontuacao5 = document.getElementById("pontuacao5");
     pontuacao5.innerText = Number(listaMedias[4].media_total).toFixed(2);
 
-    
-
+    const nome6 = document.getElementById("nomeSexto");
+    nome6.innerText = listaMedias[5].nome;
+    const pontuacao6 = document.getElementById("pontuacao6");
+    pontuacao6.innerText = Number(listaMedias[5].media_total).toFixed(2);
 
     };
 
