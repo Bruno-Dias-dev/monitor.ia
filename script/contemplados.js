@@ -373,8 +373,28 @@ carregarAnalises();
 
 const botao = document.getElementById("botaoPesquisar2");
 
-botao.addEventListener("click", function(e) {
+botao.addEventListener("click", async function(e) {
     e.preventDefault();
-    alert("Você é um betinha");
+
+    const token = localStorage.getItem("token");
+
+    if (!token)  {
+        Window.location.href = "login.html";
+    }
+
+    let dataIncial = document.getElementById("dataInicial2").value;
+    let dataFinal = document.getElementById("dataFinal2").value;
+
+    console.log(dataFinal, dataIncial)
+    
+    const response = await fetch(`http://127.0.0.1:5001/api/avaliacoes?data_inicial=${dataIncial}&data_final=${dataFinal}`, {
+        method:"GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    console.log(response);
+    
 });
 
